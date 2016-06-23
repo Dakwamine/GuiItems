@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: b37c6f370754d7d46838bb0b5a0b0945
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - guiItemsDrawer: {fileID: 11400000, guid: 508584819029c58438d1867a2456c76e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

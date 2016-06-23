@@ -1,0 +1,1294 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+SceneSettings:
+  m_ObjectHideFlags: 0
+  m_PVSData: 
+  m_PVSObjectsArray: []
+  m_PVSPortalsArray: []
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
+--- !u!104 &2
+RenderSettings:
+  m_Fog: 0
+  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: .00999999978
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  m_SkyboxMaterial: {fileID: 0}
+  m_HaloStrength: .5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 0}
+  m_ObjectHideFlags: 0
+--- !u!127 &3
+LevelGameManager:
+  m_ObjectHideFlags: 0
+--- !u!157 &4
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  m_LightProbes: {fileID: 0}
+  m_Lightmaps: []
+  m_LightmapsMode: 1
+  m_BakedColorSpace: 0
+  m_UseDualLightmapsInForward: 0
+  m_LightmapEditorSettings:
+    m_Resolution: 50
+    m_LastUsedResolution: 0
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
+    m_BounceBoost: 1
+    m_BounceIntensity: 1
+    m_SkyLightColor: {r: .860000014, g: .930000007, b: 1, a: 1}
+    m_SkyLightIntensity: 0
+    m_Quality: 0
+    m_Bounces: 1
+    m_FinalGatherRays: 1000
+    m_FinalGatherContrastThreshold: .0500000007
+    m_FinalGatherGradientThreshold: 0
+    m_FinalGatherInterpolationPoints: 15
+    m_AOAmount: 0
+    m_AOMaxDistance: .100000001
+    m_AOContrast: 1
+    m_LODSurfaceMappingDistance: 1
+    m_Padding: 0
+    m_TextureCompression: 0
+    m_LockAtlas: 0
+--- !u!196 &5
+NavMeshSettings:
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    agentRadius: .5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: .400000006
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    accuratePlacement: 0
+    minRegionArea: 2
+    widthInaccuracy: 16.666666
+    heightInaccuracy: 10
+    tileSizeHint: 0
+  m_NavMesh: {fileID: 0}
+--- !u!1001 &529370242
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+  m_RootGameObject: {fileID: 683000854}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
+--- !u!1 &683000854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 151204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+  m_PrefabInternal: {fileID: 529370242}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 683000856}
+  - 114: {fileID: 683000855}
+  m_Layer: 0
+  m_Name: Object that draws the GuiItemsCollections
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &683000855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11451204, guid: c547e03563c5ed44a97617319a130a38,
+    type: 2}
+  m_PrefabInternal: {fileID: 529370242}
+  m_GameObject: {fileID: 683000854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6474e79be75584ea4220a419d48dfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisGuiSkin: {fileID: 11400000, guid: 4a92e043916058c47b4c10f0c5f56475, type: 2}
+  designResolution: {x: 1920, y: 1080}
+  guiItemsOrder: []
+--- !u!4 &683000856
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 451204, guid: c547e03563c5ed44a97617319a130a38, type: 2}
+  m_PrefabInternal: {fileID: 529370242}
+  m_GameObject: {fileID: 683000854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+--- !u!1001 &701244505
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+  m_RootGameObject: {fileID: 747533387}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
+--- !u!1 &747533387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 139720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+  m_PrefabInternal: {fileID: 701244505}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 747533389}
+  - 114: {fileID: 747533388}
+  m_Layer: 0
+  m_Name: A GuiItemCollection object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &747533388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11439720, guid: 96347c88e5d425246a6adfc03779f371,
+    type: 2}
+  m_PrefabInternal: {fileID: 701244505}
+  m_GameObject: {fileID: 747533387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37c6f370754d7d46838bb0b5a0b0945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draw: 1
+  useArea: 1
+  area:
+    x:
+      value: 0
+      relative: 1
+    y:
+      value: 0
+      relative: 1
+    width:
+      value: 1
+      relative: 1
+    height:
+      value: 1
+      relative: 1
+  useTransformPosition: 0
+  depth: 0
+  items:
+  - guiItems: {fileID: 747533388}
+    thisItemType: 0
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: Aligned left
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 2
+    guiStyleElement: {fileID: 11470574, guid: 8a5de8c9c32ea6e4f8cb5a7076af6954, type: 2}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 1
+    editor_contentsFolded: 1
+    editor_styleFolded: 1
+  editor_showItemsList: 1
+--- !u!4 &747533389
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 439720, guid: 96347c88e5d425246a6adfc03779f371, type: 2}
+  m_PrefabInternal: {fileID: 701244505}
+  m_GameObject: {fileID: 747533387}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+--- !u!1 &895641293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 152206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+  m_PrefabInternal: {fileID: 1014135565}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 895641295}
+  - 114: {fileID: 895641294}
+  m_Layer: 0
+  m_Name: Another GuiItemCollection object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &895641294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1014135565}
+  m_GameObject: {fileID: 895641293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37c6f370754d7d46838bb0b5a0b0945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draw: 1
+  useArea: 1
+  area:
+    x:
+      value: 0
+      relative: 1
+    y:
+      value: 0
+      relative: 1
+    width:
+      value: 1
+      relative: 1
+    height:
+      value: 1
+      relative: 1
+  useTransformPosition: 0
+  depth: 2
+  items:
+  - guiItems: {fileID: 895641294}
+    thisItemType: 12
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 0
+    guiStyleElement: {fileID: 0}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 0
+    editor_contentsFolded: 0
+    editor_styleFolded: 0
+  - guiItems: {fileID: 895641294}
+    thisItemType: 11
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 0
+    guiStyleElement: {fileID: 0}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 0
+    editor_contentsFolded: 0
+    editor_styleFolded: 0
+  - guiItems: {fileID: 895641294}
+    thisItemType: 14
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 0
+    guiStyleElement: {fileID: 0}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 0
+    editor_contentsFolded: 0
+    editor_styleFolded: 0
+  - guiItems: {fileID: 895641294}
+    thisItemType: 11
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 0
+    guiStyleElement: {fileID: 0}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 0
+    editor_contentsFolded: 0
+    editor_styleFolded: 0
+  - guiItems: {fileID: 895641294}
+    thisItemType: 0
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: Aligned right (flexible spaces on top and on left)
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 3
+    guiStyleElement: {fileID: 11470574, guid: 8a5de8c9c32ea6e4f8cb5a7076af6954, type: 2}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: .125540659, g: .948529422, b: .335544765, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+        m_FontSize: 28
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 1
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 1
+      showTextColor: 1
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 1
+    editor_contentsFolded: 1
+    editor_styleFolded: 1
+  - guiItems: {fileID: 895641294}
+    thisItemType: 15
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 0
+    guiStyleElement: {fileID: 0}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 0
+    editor_contentsFolded: 0
+    editor_styleFolded: 0
+  - guiItems: {fileID: 895641294}
+    thisItemType: 13
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 0
+    guiStyleElement: {fileID: 0}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 0
+    editor_contentsFolded: 0
+    editor_styleFolded: 0
+  editor_showItemsList: 1
+--- !u!4 &895641295
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+  m_PrefabInternal: {fileID: 1014135565}
+  m_GameObject: {fileID: 895641293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+--- !u!1001 &1014135565
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452206, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 8bbb85e88ea24b74fbfd1987612c53bd, type: 2}
+  m_RootGameObject: {fileID: 895641293}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
+--- !u!1 &1411804494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1411804499}
+  - 20: {fileID: 1411804498}
+  - 92: {fileID: 1411804497}
+  - 124: {fileID: 1411804496}
+  - 81: {fileID: 1411804495}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1411804495
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411804494}
+  m_Enabled: 1
+--- !u!124 &1411804496
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411804494}
+  m_Enabled: 1
+--- !u!92 &1411804497
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411804494}
+  m_Enabled: 1
+--- !u!20 &1411804498
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411804494}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: .300000012
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
+--- !u!4 &1411804499
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411804494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0

@@ -1,0 +1,177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &139720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 439720}
+  - 114: {fileID: 11439720}
+  m_Layer: 0
+  m_Name: A GuiItemCollection object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &439720
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139720}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11439720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37c6f370754d7d46838bb0b5a0b0945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draw: 1
+  useArea: 1
+  area:
+    x:
+      value: 0
+      relative: 1
+    y:
+      value: 0
+      relative: 1
+    width:
+      value: 1
+      relative: 1
+    height:
+      value: 1
+      relative: 1
+  useTransformPosition: 0
+  depth: 0
+  items:
+  - guiItems: {fileID: 11439720}
+    thisItemType: 0
+    enabled: 1
+    activated: 1
+    tag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    eventToLaunch: 
+    parameter: 
+    rotationAngle: 0
+    pivotPoint:
+      x:
+        value: 0
+        relative: 0
+      y:
+        value: 0
+        relative: 0
+    loop: 0
+    loopOffset: 0
+    loopScrollSpeed: 0
+    contents:
+    - m_Text: Aligned left
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    maskChar: '*'
+    maxLength: -1
+    toggle: 0
+    selected: 0
+    xCount: 3
+    pixels: 0
+    scrollViewPosition: {x: 0, y: 0}
+    alwaysShowHorizontal: 0
+    alwaysShowVertical: 0
+    horizontalScrollbarStyle: {fileID: 0}
+    verticalScrollbarStyle: {fileID: 0}
+    backgroundStyle: {fileID: 0}
+    thisGuiStyleMode: 2
+    guiStyleElement: {fileID: 11470574, guid: 8a5de8c9c32ea6e4f8cb5a7076af6954, type: 2}
+    customStyle:
+      guiStyle:
+        m_Name: 
+        m_Normal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Hover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Active:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Focused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnNormal:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnHover:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnActive:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_OnFocused:
+          m_Background: {fileID: 0}
+          m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+        m_Border:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Margin:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Overflow:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        m_Font: {fileID: 0}
+        m_FontSize: 0
+        m_FontStyle: 0
+        m_Alignment: 0
+        m_WordWrap: 0
+        m_RichText: 0
+        m_TextClipping: 0
+        m_ImagePosition: 0
+        m_ContentOffset: {x: 0, y: 0}
+        m_FixedWidth: 0
+        m_FixedHeight: 0
+        m_StretchWidth: 1
+        m_StretchHeight: 0
+      showTextStyle: 0
+      showTextColor: 0
+      showBackgroundTextures: 0
+      showMisc: 0
+    guiSkin: {fileID: 0}
+    editor_folded: 1
+    editor_contentsFolded: 1
+    editor_styleFolded: 1
+  editor_showItemsList: 1
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 139720}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1
