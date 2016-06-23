@@ -1,5 +1,5 @@
 # GuiItems
-Gui system relying on the good ol' scripts in OnGui(), supporting any screen ratio!
+Gui system for Unity3d relying on the good ol' scripts in OnGui(), supporting any screen ratio!
 I tried to make the system as efficient as possible and it works well on smartphones (no noticeable effect on performance). You should get as much draw calls as you would get using plain scripting.
 
 The ratio adaptation is simply playing around the Gui.matrix. You just have to define a design resolution, let's say 1024x768 or 1920x1080, and depending on the ratio and the size of the screen, the elements will resize and be positioned accordingly.
