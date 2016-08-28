@@ -13,7 +13,7 @@ public class GuiItemsCollectionEditor : Editor
 
 
 	/// <summary>
-	/// Accès rapide à l'objet.
+	/// Quick access to target object.
 	/// </summary>
 	GuiItemsCollection guiItems
 	{
@@ -36,22 +36,22 @@ public class GuiItemsCollectionEditor : Editor
 		SerializedProperty sp;
 
 
-		// Permet à l'éditeur de savoir s'il faut enregistrer le guiItems sur le disque après un changement
+		// Allows the editor to know if we need to save changes on disk
 		GUI.changed = false;
 
 
-		// Indiquer à l'utilisateur qu'aucun eventReceiver n'a été associé à ce GuiItems
+		// Indicates to the user that no event receiver has been added to this Collection
 		if(!guiItems.GetComponent<GuiItemsInterfaceBase>())
 		{
-			EditorGUILayout.HelpBox("Aucun récepteur d'évènements détecté pour ce GuiItems. Si vous n'ajoutez pas un component dont le type dérive de GuiItemsInterfaceBase, aucun évènement ne sera transmis hors de ce GuiItems.", MessageType.Info);
+			EditorGUILayout.HelpBox("No event receiver has been detected on this Collection. Please add a component inheriting from GuiItemsInterfaceBase to be able to process events from this Collection.", MessageType.Info);
 		}
 
 
-		// Booléen pour savoir s'il faut afficher la collection dans le jeu
+		// Boolean to know if we have to draw the collection while playing
 		EditorGUILayout.PropertyField(serializedObject.FindProperty("draw"), new GUIContent("Draw", "Does this collection have to show up ingame?"));
 
 
-		// Rectangle de zone de ce GuiItems
+		// Area rect of this Collection
 		sp = serializedObject.FindProperty("useArea");
 		EditorGUILayout.PropertyField(sp, new GUIContent("Use Area", "Begin a GUILayout block of GUI controls in a fixed screen area."));
 		bool guiEnabledSave = GUI.enabled;
@@ -62,14 +62,14 @@ public class GuiItemsCollectionEditor : Editor
 			GUI.enabled = guiEnabledSave;
 
 
-		// Positionnement par le transform de guiItems ?
+		// Use transform.position to position this collection?
 		sp = serializedObject.FindProperty("useTransformPosition");
 		EditorGUI.indentLevel++;
 		EditorGUILayout.PropertyField(sp, new GUIContent("Use Transform.position", "Does this collection uses Transform.position to position on screen? If so, values have to be % to the current screen : x=0f means left border, x=1f means right border..."));
 		EditorGUI.indentLevel--;
 
 
-		// Booléen pour empêcher l'utilisation des champs X et Y si on utilise Transform.position
+		// Boolean which prevents X and Y fields
 		bool useTransformPosition = sp.boolValue;
 
 		GuiItemsGUILayoutExtension.RectExtensionField(serializedObject.FindProperty("area"), GUI.enabled ? !useTransformPosition : false, GUI.enabled ? !useTransformPosition : false, GUI.enabled, GUI.enabled);
@@ -90,22 +90,22 @@ public class GuiItemsCollectionEditor : Editor
 			SerializedProperty itemsProperty = serializedObject.FindProperty("items");
 
 
-			// Boutons pour ajouter un élément
+			// Buttons for adding a GuiItem in the Collection
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.Space();
 
 			GUI.enabled = false;
-			GUILayout.Button(new GUIContent("Copy above", "Copier l'élément au dessus"), EditorStyles.miniButtonLeft);
+			GUILayout.Button(new GUIContent("Copy above", "Copy the above GuiItem"), EditorStyles.miniButtonLeft);
 			GUI.enabled = true;
 
-			if(GUILayout.Button(new GUIContent("+", "Ajouter un élément ici"), EditorStyles.miniButtonMid))
+			if(GUILayout.Button(new GUIContent("+", "Add a GuiItem here"), EditorStyles.miniButtonMid))
 			{
 				AddRequest.RequestId(0);
 			}
 
 			if(guiItems.items.Count == 0)
 				GUI.enabled = false;
-			if(GUILayout.Button(new GUIContent("Copy below", "Copier l'élément en dessous"), EditorStyles.miniButtonRight))
+			if(GUILayout.Button(new GUIContent("Copy below", "Copy the below GuiItem"), EditorStyles.miniButtonRight))
 			{
 				CopyRequest.RequestId(0, 0);
 			}
@@ -118,7 +118,7 @@ public class GuiItemsCollectionEditor : Editor
 			EditorGUILayout.Space();
 
 
-			// Afficher les sous-éléments GuiItem
+			// Prepare to display GuiItem in the inspector
 			int prevIdentLevel = EditorGUI.indentLevel;
 
 
@@ -132,28 +132,28 @@ public class GuiItemsCollectionEditor : Editor
 
 			while(property.NextVisible(false) && property.depth == propertyStartingDepth)
 			{
-				// Dessiner l'inspecteur du GuiItem
+				// Draw the GuiItem inspector
 				GuiItemInspector.Draw(property, guiItems.items[index], index);
 
 
-				// Boutons pour ajouter un élément
+				// Buttons for adding a GuiItem in the Collection
 				EditorGUILayout.BeginHorizontal();
 				{
 					EditorGUILayout.Space();
 
-					if(GUILayout.Button(new GUIContent("Copy above", "Copier l'élément au dessus"), EditorStyles.miniButtonLeft))
+					if(GUILayout.Button(new GUIContent("Copy above", "Copy the above GuiItem"), EditorStyles.miniButtonLeft))
 					{
 						CopyRequest.RequestId(index + 1, index);
 					}
 
-					if(GUILayout.Button(new GUIContent("+", "Ajouter un élément ici"), EditorStyles.miniButtonMid))
+					if(GUILayout.Button(new GUIContent("+", "Add a GuiItem here"), EditorStyles.miniButtonMid))
 					{
 						AddRequest.RequestId(index + 1);
 					}
 
 					if(index == arraySize - 1)
 						GUI.enabled = false;
-					if(GUILayout.Button(new GUIContent("Copy below", "Copier l'élément en dessous"), EditorStyles.miniButtonRight))
+					if(GUILayout.Button(new GUIContent("Copy below", "Copy the below GuiItem"), EditorStyles.miniButtonRight))
 					{
 						CopyRequest.RequestId(index + 1, index + 1);
 					}
@@ -173,12 +173,10 @@ public class GuiItemsCollectionEditor : Editor
 			EditorGUI.indentLevel = prevIdentLevel;
 
 			{
-				// Ajouter un GuiItemsCollection.GuiItem dans ce GuiItems si requis
+				// Add a GuiItem in this Collection if needed
 				int id = AddRequest.GetId();
 				if(id != -1)
 				{
-					//guiItems.items.Insert(id, new GuiItemsCollection.GuiItem(guiItems));
-
 					if(id < itemsProperty.arraySize)
 						itemsProperty.InsertArrayElementAtIndex(id);
 					else
@@ -189,41 +187,34 @@ public class GuiItemsCollectionEditor : Editor
 				}
 			}
 			{
-				// Retirer un GuiItemsCollection.GuiItem dans ce GuiItems si requis
+				// Remove a GuiItem from this Collection if needed
 				int id = RemoveRequest.GetId();
 				if(id != -1)
 				{
-					//guiItems.items.Remove(guiItems.items[id]);
 					itemsProperty.DeleteArrayElementAtIndex(id);
 
 					GUI.FocusControl(focusUnset);
 				}
 			}
 			{
-				// Intervertir des GuiItemsCollection.GuiItem dans ce GuiItems si requis
+				// Swap two GuiItem objects from this Collection if needed
 				int[] id = MoveRequest.GetIds();
 				if(id.Length != 0)
 				{
-					//GuiItemsCollection.GuiItem originalItem = guiItems.items[id[0]];
-
-					//guiItems.items.RemoveAt(id[0]);
-					//guiItems.items.Insert(id[1], originalItem);
-
 					itemsProperty.MoveArrayElement(id[0], id[1]);
 
 					GUI.FocusControl(focusUnset);
 				}
 			}
 			{
-				// Copier un GuiItemsCollection.GuiItem dans ce GuiItems si requis
+				// Copy a GuiItem if needed
 				int idToCopy;
 				int destinationId = CopyRequest.GetId(out idToCopy);
 				if(destinationId != -1)
 				{
-					//guiItems.items.Insert(id, new GuiItemsCollection.GuiItem(guiItems.items[idToCopy]));
 					itemsProperty.InsertArrayElementAtIndex(idToCopy);
-					//GuiItemsCollectionEditor.ResetGuiItemSystemOnly(itemsProperty.GetArrayElementAtIndex(idToCopy));
 					itemsProperty.MoveArrayElement(idToCopy, destinationId);
+
 					GUI.FocusControl(focusUnset);
 				}
 			}
@@ -232,56 +223,13 @@ public class GuiItemsCollectionEditor : Editor
 		EditorGUILayout.EndVertical();
 
 
-		// Si un seul élément d'interface a été modifié
-		if(GUI.changed)
-		{
-			// Mettre à jour toutes les références de GuiItems dans tous les GuiItem
-			/*foreach(GuiItemsCollection.GuiItem g in guiItems.items)
-			{
-				g.guiItems = guiItems;
-			}*/
-
-
-			// Mettre à jour / Enregistrer sur le disque dur ce guiItems
-			//EditorUtility.SetDirty(guiItems);
-			//Debug.Log("changed");
-		}
-		/*foreach(GuiItemsCollection.GuiItem g in guiItems.items)
-		{
-			g.color = Color.white;
-		}*/
-
+		// Apply modifications
 		serializedObject.ApplyModifiedProperties();
 
+
+		// Revert to previous state
 		GUI.changed = guiChangedSave;
 	}
-
-
-
-	/*void OnEnable()
-	{
-		//serializedObject.Update();
-		//Debug.Log("Collection enable");
-		//foreach(GuiItemsCollection.GuiItem g in guiItems.items)
-		//{
-		//serializedObject.FindProperty(
-		//g.newPivotPoint = ScriptableObject.CreateInstance<GuiItems.Vector2Extension>();
-		//g.newPivotPoint = new GuiItems.Vector2Extension();
-		//	g.newPivotPoint = new GuiItemsCollection.GuiItem.Vector2Extension2();
-		//	g.newPivotPoint.x.Value = g.newPivotPointLOZ.x.Value;
-		//}
-
-		foreach(GuiItemsCollection.GuiItem g in guiItems.items)
-		{
-			if(g.contents.Count == 0)
-			{
-				g.contents.Add(new GUIContent());
-			}
-		}
-
-		EditorUtility.SetDirty(guiItems);
-		//serializedObject.ApplyModifiedProperties();
-	}*/
 
 
 	/// <summary>
@@ -328,28 +276,28 @@ public class GuiItemsCollectionEditor : Editor
 
 
 /// <summary>
-/// Inspecteur d'un GuiItemsCollection.GuiItem.
+/// GuiItem inspector.
 /// </summary>
 static public class GuiItemInspector
 {
 	/// <summary>
-	/// Indique s'il est possible de référencer des objets de la scène.
-	/// Les GuiItemsCollection.GuiItem ne peuvent référencer des objets de scène que s'ils sont dans la scène.
+	/// Indicates if it is possible to reference objects from Scene.
+	/// GuiItem objects should not reference Scene object if they are not instantiated in the Scene hierarchy.
 	/// </summary>
-	/// <param name="guiItems">L'objet GuiItems auquel cet inspecteur appartient.</param>
+	/// <param name="collection">The Collection which contains this GuiItem.</param>
 	/// <returns></returns>
-	static private bool AllowSceneObjects(GuiItemsCollection guiItems)
+	static private bool AllowSceneObjects(GuiItemsCollection collection)
 	{
-		return EditorUtility.IsPersistent(guiItems) ? false : true;
+		return EditorUtility.IsPersistent(collection) ? false : true;
 	}
 
 
 	/// <summary>
-	/// Dessine un GuiItemsCollection.GuiItem dans l'inspecteur.
+	/// Draws a GuiItem in the Inspector.
 	/// </summary>
-	/// <param name="_itemProperty">Le property de l'élément que représente cet inspecteur.</param>
-	/// <param name="guiItem">L'élément que représente cet inspecteur.</param>
-	/// <param name="id">L'id de cet élément dans son conteneur GuiItems.</param>
+	/// <param name="_itemProperty">The serialized property of the GuiItem to draw.</param>
+	/// <param name="guiItem">The GuiItem object to draw.</param>
+	/// <param name="_id">The id of this GuiItem in the Collection.</param>
 	static public void Draw(SerializedProperty _itemProperty, GuiItemsCollection.GuiItem guiItem, int _id)
 	{
 		bool guiEnabledSave = GUI.enabled;
@@ -360,34 +308,33 @@ static public class GuiItemInspector
 		GUI.color = c;
 
 
-		// Barre avec ses boutons
+		// Title bar with its buttons
 		EditorGUILayout.BeginHorizontal();
 		{
-			// Property de la variable qui indique si cet élément doit être déplié (visible)
+			// Property which indicates if this GuiItem is folded
 			SerializedProperty editor_foldedProperty = _itemProperty.FindPropertyRelative("editor_folded");
 
 
-			// On utilise un Foldout personnalisé parce qu'il est géré par un booléen
+			// We use a custom Foldout with a clickable label
 			bool foldTemp = GuiItemsGUILayoutExtension.FoldoutButton(guiItem.editor_folded, new GUIContent(guiItem.thisItemType.ToString() + (guiItem.tag != "" ? ":" + guiItem.tag : "")));
-			//bool foldTemp = EditorGUILayout.Foldout(guiItem.editor_folded, new GUIContent(guiItem.thisItemType.ToString() + (guiItem.tag != "" ? ":" + guiItem.tag : "")));
 
 
-			// Enregistrer la valeur editor_folded
+			// Save the editor_folded value
 			if(foldTemp != guiItem.editor_folded)
 				editor_foldedProperty.boolValue = foldTemp;
 
 
-			// Property de la liste qui contient les éléments
+			// Property of the list which contains the GuiItem elements
 			SerializedProperty itemsArrayProperty = _itemProperty.serializedObject.FindProperty("items");
 
 
-			// Boutons pour déplacer ou supprimer cet élément
+			// Buttons to move or remove this GuiItem
 			if(_id == 0)
 				GUI.enabled = false;
 			else
 				GUI.enabled = true;
 
-			if(GUILayout.Button(new GUIContent("▲", "Monter cet élément"), CustomStyles.miniButtonLeft))
+			if(GUILayout.Button(new GUIContent("▲", "Move up"), CustomStyles.miniButtonLeft))
 			{
 				MoveRequest.RequestIds(_id, _id - 1);
 			}
@@ -397,7 +344,7 @@ static public class GuiItemInspector
 			else
 				GUI.enabled = true;
 
-			if(GUILayout.Button(new GUIContent("▼", "Descendre cet élément"), CustomStyles.miniButtonMid))
+			if(GUILayout.Button(new GUIContent("▼", "Move down"), CustomStyles.miniButtonMid))
 			{
 				MoveRequest.RequestIds(_id, _id + 1);
 			}
@@ -405,7 +352,7 @@ static public class GuiItemInspector
 			GUI.enabled = guiEnabledSave;
 
 
-			if(GUILayout.Button(new GUIContent("X", "Supprimer"), CustomStyles.miniButtonRight))
+			if(GUILayout.Button(new GUIContent("X", "Remove"), CustomStyles.miniButtonRight))
 			{
 				RemoveRequest.RequestId(_id);
 			}
@@ -416,21 +363,21 @@ static public class GuiItemInspector
 		if(guiItem.editor_folded)
 		{
 			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("thisItemType"), new GUIContent("Element Type"));
-			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("enabled"), new GUIContent("Enabled", "Est-ce que ce GuiItemsCollection.GuiItem est affiché ?"));
-			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("activated"), new GUIContent("Activated", "Est-ce que ce GuiItemsCollection.GuiItem est activé ? En gros, définit si la valeur de cet élément peut être modifié ingame (il reste affiché)."));
+			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("enabled"), new GUIContent("Enabled", "Is this GuiItem enabled?"));
+			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("activated"), new GUIContent("Activated", "Is this GuiItem activated? In other words, defines if this GuiItem is interactive (it is still displayed)."));
 
 
-			// Rotation // Désactivé pour le moment car pas robuste comme système
+			// Rotation // Deactivated for the moment because the system is not robust
 			//guiItem.rotationAngle = EditorGUILayout.FloatField(new GUIContent("Rotation Angle", "Rotation applying on this element and all next elements. You don't need to reset it at the end."), guiItem.rotationAngle);
 			//guiItem.pivotPoint = EditorGUILayout.Vector2Field("Rotation pivot point", guiItem.pivotPoint);
 
 
-			// Tag de ce GuiItemsCollection.GuiItem afin que GuiItemsInterfaceBase puisse retrouver les valeurs de cet élément
-			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("tag"), new GUIContent("Tag", "Tag de ce GuiItemsCollection.GuiItem afin que GuiItemsInterfaceBase puisse retrouver les valeurs de cet élément."));
-			
-			
-			// Couleur
-			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("color"), new GUIContent("Color", "Couleur utilisé par ce GuiItemsCollection.GuiItem. La couleur appliquée est relative à celle qui est employée globalement dans la collection."));
+			// This GuiItem name. This is needed for GuiItemsInterfaceBase children for event handling. Can be empty.
+			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("tag"), new GUIContent("Tag", "This GuiItem name. This is needed for GuiItemsInterfaceBase children for event handling. Can be empty."));
+
+
+			// Color
+			EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("color"), new GUIContent("Color", "Color of this GuiItem. The applied color is relative to the global one set on the Collection."));
 
 
 			switch((GuiItemsCollection.GuiItem.itemType)_itemProperty.FindPropertyRelative("thisItemType").enumValueIndex)
@@ -445,7 +392,7 @@ static public class GuiItemInspector
 					}
 
 
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -455,7 +402,7 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.BOX:
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -465,12 +412,12 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.BUTTON:
-					// Nom de l'évènement à lancer si cet élément est activé
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("eventToLaunch"), new GUIContent("Event To Launch", "Nom de l'évènement à lancer si cet élément est activé."));
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("parameter"), new GUIContent("Parameter", "Paramètre de l'évènement à utiliser si cet élément est activé."));
+					// Events properties
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("eventToLaunch"), new GUIContent("Event To Launch", "Event name to launch on activation."));
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("parameter"), new GUIContent("Parameter", "Parameter of the event."));
 
 
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -480,12 +427,12 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.REPEAT_BUTTON:
-					// Nom de l'évènement à lancer si cet élément est activé
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("eventToLaunch"), new GUIContent("Event To Launch", "Nom de l'évènement à lancer si cet élément est activé."));
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("parameter"), new GUIContent("Parameter", "Paramètre de l'évènement à utiliser si cet élément est activé."));
+					// Events properties
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("eventToLaunch"), new GUIContent("Event To Launch", "Event name to launch on activation."));
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("parameter"), new GUIContent("Parameter", "Parameter of the event."));
 
 
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -495,11 +442,11 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.TEXT_FIELD:
-					// Nombre de caractères maximum
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maxLength"), new GUIContent("Max Length", "Nombre de caractères maximum. Mettre un chiffre négatif pour ne pas limiter la longueur."));
+					// Max characters count
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maxLength"), new GUIContent("Max Length", "Max characters count. Use negative value for infinite length."));
 
 
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -510,20 +457,14 @@ static public class GuiItemInspector
 
 				case GuiItemsCollection.GuiItem.itemType.PASSWORD_FIELD:
 					// Caractère de masque
-					/*if(_itemProperty.FindPropertyRelative("maskChar").stringValue == "")
-						_itemProperty.FindPropertyRelative("maskChar").stringValue = "*";
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.PrefixLabel(new GUIContent("Mask Char", "Character to mask the password with."));
-					_itemProperty.FindPropertyRelative("maskChar").stringValue = GUILayout.TextField(_itemProperty.FindPropertyRelative("maskChar").stringValue, 1);
-					EditorGUILayout.EndHorizontal();*/
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maskChar"));
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maskChar"), new GUIContent("Mask Char", "Character to mask the password with."));
 
 
-					// Nombre de caractères maximum
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maxLength"), new GUIContent("Max Length", "Nombre de caractères maximum. Mettre un chiffre négatif pour ne pas limiter la longueur."));
+					// Max characters count
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maxLength"), new GUIContent("Max Length", "Max characters count. Use negative value for infinite length."));
 
 
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -533,11 +474,11 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.TEXT_AREA:
-					// Nombre de caractères maximum
-					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maxLength"), new GUIContent("Max Length", "Nombre de caractères maximum. Mettre un chiffre négatif pour ne pas limiter la longueur."));
+					// Max characters count
+					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("maxLength"), new GUIContent("Max Length", "Max characters count. Use negative value for infinite length."));
 
 
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -547,7 +488,7 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.TOGGLE:
-					// Dessiner l'inspecteur du GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -557,7 +498,7 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.TOOLBAR:
-					// Dessiner l'inspecteur des GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -567,14 +508,14 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.SELECTION_GRID:
-					// Nombre de colonnes dans le selection grid
+					// Column count in the SelectionGrid
 					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("xCount"), new GUIContent("xCount", "How many elements to fit in the horizontal direction. The elements will be scaled to fit unless the style defines a fixedWidth to use. The height of the control will be determined from the number of elements."));
 
 					if(_itemProperty.FindPropertyRelative("xCount").intValue < 1)
 						_itemProperty.FindPropertyRelative("xCount").intValue = 1;
 
 
-					// Dessiner l'inspecteur des GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -591,10 +532,10 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.BEGIN_HORIZONTAL:
-					EditorGUILayout.HelpBox("Le contenu ne peut être affiché que si le mode de style de cet élément est différent de NO_STYLE. De plus, les images et les textes ne pouvant s'afficher mutuellement, l'image est prioritaire sur le texte lorsqu'elle est définie.", MessageType.Info);
+					EditorGUILayout.HelpBox("The content cannot be drawn if style mode of this GuiItem is not NO_STYLE. Moreover, images and texts not possibly drawn simultaneously, the image has priority over text.", MessageType.Info);
 
 
-					// Dessiner l'inspecteur des GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -604,10 +545,10 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.BEGIN_VERTICAL:
-					EditorGUILayout.HelpBox("Le contenu ne peut être affiché que si le mode de style de cet élément est différent de NO_STYLE. De plus, les images et les textes ne pouvant s'afficher mutuellement, l'image est prioritaire sur le texte lorsqu'elle est définie.", MessageType.Info);
+					EditorGUILayout.HelpBox("The content cannot be drawn if style mode of this GuiItem is not NO_STYLE. Moreover, images and texts not possibly drawn simultaneously, the image has priority over text.", MessageType.Info);
 
 
-					// Dessiner l'inspecteur des GUIContent
+					// Draw GuiContent inspector
 					GuiContentInspector.Draw(_itemProperty);
 
 
@@ -617,7 +558,7 @@ static public class GuiItemInspector
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.BEGIN_SCROLL_VIEW:
-					EditorGUILayout.HelpBox("Le BeginScrollView est un peu bugué (bug Unity non corrigé). On ne peut donc pas utiliser de GuiStyleElement pour le style des barres. Il faut définir le style des barres directement dans le skin (voir le skin indiqué dans GuiItemsDrawer).", MessageType.Info);
+					EditorGUILayout.HelpBox("BeginScrollView is bugged (Unity has to fix it). Therefore, we cannot use GuiStyleElement for bar styling. For bar styling, use the skin used by this Collection.guiSkin (GuiItemsDrawer.thisGuiSkin also do the job).", MessageType.Info);
 
 					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("alwaysShowHorizontal"));
 					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("alwaysShowVertical"));
@@ -625,7 +566,9 @@ static public class GuiItemInspector
 
 					// GUISkin
 					EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("guiSkin"));
-					// GUIStyle
+
+
+					// GUIStyle is bugged so don't use unless Unity has fixed this
 					//DrawGuiStyleBlock(_itemProperty);
 
 					break;
@@ -647,7 +590,6 @@ static public class GuiItemInspector
 		EditorGUILayout.BeginVertical(GUI.skin.box);
 		GUI.color = c;
 		{
-			//EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("editor_styleFolded"), new GUIContent("Style"));
 			SerializedProperty editor_styleFoldedProperty = _itemProperty.FindPropertyRelative("editor_styleFolded");
 			bool tmp = GuiItemsGUILayoutExtension.FoldoutButton(editor_styleFoldedProperty.boolValue, new GUIContent("Style"));
 
@@ -659,11 +601,11 @@ static public class GuiItemInspector
 				EditorGUILayout.Space();
 
 
-				// Sélecteur de thisGuiStyleMode
+				// thisGuiStyleMode selector
 				DrawStyleModeSelector(_itemProperty);
 
 
-				// Inspecteur de style
+				// GUIStyle inspector
 				DrawGuiStyleInspector(_itemProperty);
 
 				EditorGUILayout.Space();
@@ -674,9 +616,9 @@ static public class GuiItemInspector
 
 
 	/// <summary>
-	/// Dessine le sélecteur de thisGuiStyleMode avec les boutons Edit et Customize.
+	/// Draws the thisGuiStyleMode selector with Edit and Customize buttons.
 	/// </summary>
-	/// <param name="guiItem">Le GuiItemsCollection.GuiItem auquel ce sélecteur appartient.</param>
+	/// <param name="_itemProperty">The serialized property of the GuiItem from which we want to draw the style mode selector.</param>
 	static private void DrawStyleModeSelector(SerializedProperty _itemProperty)
 	{
 		EditorGUILayout.BeginHorizontal();
@@ -684,31 +626,31 @@ static public class GuiItemInspector
 		SerializedProperty thisGuiStyleModeProperty = _itemProperty.FindPropertyRelative("thisGuiStyleMode");
 
 		EditorGUILayout.PropertyField(thisGuiStyleModeProperty);
-		//guiItem.thisGuiStyleMode = (GuiItemsCollection.GuiItem.guiStyleMode)EditorGUILayout.EnumPopup(guiItem.thisGuiStyleMode);
+
 		GUIStyle gs = GUI.skin.button;
 		GUI.skin.button.font = EditorStyles.miniFont;
 
 
-		// Bouton pour éditer le style actuel
+		// Button to edit the current style
 		switch((GuiItemsCollection.GuiItem.guiStyleMode)thisGuiStyleModeProperty.enumValueIndex)
 		{
 			case GuiItemsCollection.GuiItem.guiStyleMode.GUI_STYLE_ELEMENT:
-				if(GUILayout.Button(new GUIContent("Edit", "Éditer ce style"), EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
+				if(GUILayout.Button(new GUIContent("Edit", "Edit this style"), EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
 				{
-					// Sélectionner cet objet
+					// Select this object
 					Selection.activeObject = _itemProperty.FindPropertyRelative("guiStyleElement").objectReferenceValue;
 				}
 				break;
 
 			default:
 				GUI.enabled = false;
-				GUILayout.Button(new GUIContent("Edit", "Éditer ce style"), EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
+				GUILayout.Button(new GUIContent("Edit", "Edit this style"), EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
 				GUI.enabled = true;
 				break;
 		}
 
 
-		// Bouton pour customiser le style actuel
+		// Button to customize the current style
 		bool guiEnabledSave = GUI.enabled;
 
 		if((GuiItemsCollection.GuiItem.guiStyleMode)thisGuiStyleModeProperty.enumValueIndex == GuiItemsCollection.GuiItem.guiStyleMode.CUSTOM_STYLE
@@ -718,12 +660,12 @@ static public class GuiItemInspector
 			GUI.enabled = guiEnabledSave;
 
 
-		if(GUILayout.Button(new GUIContent("Customize", "Personnaliser le style actuel. Seul ce GuiItemsCollection.GuiItem aura ce style."), EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
+		if(GUILayout.Button(new GUIContent("Customize", "Customize the current style applied on this GuiItem. Only this GuiItem will have access to this style."), EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
 		{
 			switch((GuiItemsCollection.GuiItem.guiStyleMode)thisGuiStyleModeProperty.enumValueIndex)
 			{
 				case GuiItemsCollection.GuiItem.guiStyleMode.GUI_STYLE_ELEMENT:
-					// Copier le style du guiStyleElement vers le CustomStyle
+					// Copy the style of guiStyleElement to CustomStyle
 					GuiItemsTools.GUIStyleExtensionEditor.CopyStyleTo(((GuiStyleElement)_itemProperty.FindPropertyRelative("guiStyleElement").objectReferenceValue).guiStyleExtension.guiStyle, _itemProperty.FindPropertyRelative("customStyle.guiStyle"));
 
 					thisGuiStyleModeProperty.enumValueIndex = (int)GuiItemsCollection.GuiItem.guiStyleMode.CUSTOM_STYLE;
@@ -790,17 +732,17 @@ static public class GuiItemInspector
 
 
 	/// <summary>
-	/// Dessine l'inspecteur de style du GuiItemsCollection.GuiItem en paramètre en fonction du mode de style appliqué sur ce dernier.
+	/// Draws a GuiItem style inspector.
 	/// </summary>
-	/// <param name="guiItem">Le GuiItemsCollection.GuiItem auquel ce sélecteur appartient.</param>
+	/// <param name="_itemProperty">The serialized property of the GuiItem from which we want to draw the style inspector.</param>
 	static private void DrawGuiStyleInspector(SerializedProperty _itemProperty)
 	{
 		switch((GuiItemsCollection.GuiItem.guiStyleMode)_itemProperty.FindPropertyRelative("thisGuiStyleMode").enumValueIndex)
 		{
 			case GuiItemsCollection.GuiItem.guiStyleMode.GUI_STYLE_ELEMENT:
 				EditorGUILayout.Space();
-				//GameObject go = (GameObject)EditorGUILayout.ObjectField(new GUIContent("Gui Style Element", "Game Object référençant le style à utiliser."), guiItem.guiStyleElement != null ? guiItem.guiStyleElement.gameObject : null, typeof(GameObject), AllowSceneObjects(guiItem.guiItems));
-				EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("guiStyleElement"), new GUIContent("Gui Style Element", "Game Object référençant le style à utiliser."));
+
+				EditorGUILayout.PropertyField(_itemProperty.FindPropertyRelative("guiStyleElement"), new GUIContent("Gui Style Element", "Game Object referencing the style to use."));
 
 				break;
 
@@ -808,7 +750,7 @@ static public class GuiItemInspector
 				EditorGUILayout.Space();
 
 
-				// Dessiner l'inspecteur de customStyle
+				// Draw customStyle's inspector
 				GuiStyleInspector.Draw(_itemProperty.FindPropertyRelative("customStyle"));
 				break;
 		}
@@ -817,49 +759,48 @@ static public class GuiItemInspector
 
 
 /// <summary>
-/// Classe qui affiche le GUIContent dans l'inspecteur.
+/// Class for GUIContent's inspector.
 /// </summary>
 public class GuiContentInspector
 {
 	/// <summary>
-	/// Affiche un GUIContent dans l'inspecteur.
+	/// Draws a GUIContent's inspector.
 	/// </summary>
-	/// <param name="_guiContentsArrayProperty">Le property de la liste des GUIContent</param>
-	/// <param name="_guiItem">Le GuiItemsCollection.GuiItem dont ce GUIContent en est le contenu.</param>
-	/// <param name="_drawTooltip">Est-ce qu'il faut dessiner le champ du tooltip ? (pour BEGIN_HORIZONTAL et BEGIN_VERTICAL).</param>
+	/// <param name="_guiItemProperty">The GuiItem from which this GUIContent belongs.</param>
+	/// <param name="_drawTooltip">Do we have to draw the tooltip field? (for BEGIN_HORIZONTAL and BEGIN_VERTICAL).</param>
 	static public void Draw(SerializedProperty _guiItemProperty, bool _drawTooltip = true)
 	{
-		// Liste des contenus de ce GuiItemsCollection.GuiItem à afficher
+		// List of the contents to draw
 		SerializedProperty guiContentsArrayProperty = _guiItemProperty.FindPropertyRelative("contents");
-		GuiItemsCollection.GuiItem.itemType itemType = (GuiItemsCollection.GuiItem.itemType)_guiItemProperty.FindPropertyRelative("thisItemType").enumValueIndex; //_guiItem.thisItemType;
+		GuiItemsCollection.GuiItem.itemType itemType = (GuiItemsCollection.GuiItem.itemType)_guiItemProperty.FindPropertyRelative("thisItemType").enumValueIndex;
 
 
-		// Conteneur principal
+		// Main container
 		Color c = GUI.color;
 		GUI.color = CustomStyles.BACKGROUND_COLOR_GREY;
 		EditorGUILayout.BeginVertical(GUI.skin.box);
 		GUI.color = c;
 		{
-			// Fold de tout les GUIContent ( != fold des éléments)
+			// GUIContent fold state
 			SerializedProperty editor_contentsFoldedProperty = _guiItemProperty.FindPropertyRelative("editor_contentsFolded");
 
 			bool fold = GuiItemsGUILayoutExtension.FoldoutButton(editor_contentsFoldedProperty.boolValue, new GUIContent("Content(s)", "Content(s) of this element."));
 
 
-			// Enregistrer la valeur si besoin
+			// Save the value if needed
 			if(fold != editor_contentsFoldedProperty.boolValue)
 				editor_contentsFoldedProperty.boolValue = fold;
 
 
 			if(fold)
 			{
-				// Ne pas permettre l'ajout ou le déplacement si le type de ce GuiItemsCollection.GuiItem ne permet pas le multicontenus
+				// Remove add or move actions if this GuiItem's type is not permitting multicontent
 				if((itemType == GuiItemsCollection.GuiItem.itemType.TOOLBAR) || (itemType == GuiItemsCollection.GuiItem.itemType.SELECTION_GRID))
 				{
-					// Bouton pour ajouter un GUIContent
+					// Button to add a GUIContent
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.Space();
-					if(GUILayout.Button(new GUIContent("+", "Ajouter un contenu ici"), CustomStyles.littleButton))
+					if(GUILayout.Button(new GUIContent("+", "Add a content here"), CustomStyles.littleButton))
 					{
 						ContentAddRequest.RequestId(0);
 					}
@@ -876,7 +817,7 @@ public class GuiContentInspector
 
 				while(contentProperty.NextVisible(false) && contentProperty.depth == startingDepth)
 				{
-					// Horizontal de la barre de titre + boutons à droite
+					// Title bar + buttons on the right side
 					c = GUI.color;
 					GUI.color = CustomStyles.BACKGROUND_COLOR_GREY;
 					EditorGUILayout.BeginVertical(GUI.skin.box);
@@ -886,7 +827,7 @@ public class GuiContentInspector
 						EditorGUILayout.LabelField("Content #" + index);
 
 
-						// Ne pas permettre l'ajout ou le déplacement si le type de ce GuiItemsCollection.GuiItem ne permet pas le multicontenus
+						// Remove add or move actions if this GuiItem's type is not permitting multicontent
 						if((itemType == GuiItemsCollection.GuiItem.itemType.TOOLBAR) || (itemType == GuiItemsCollection.GuiItem.itemType.SELECTION_GRID))
 						{
 							bool guiEnabledSave = GUI.enabled;
@@ -896,22 +837,20 @@ public class GuiContentInspector
 							else
 								GUI.enabled = guiEnabledSave;
 
-							if(GUILayout.Button(new GUIContent("▲", "Monter ce contenu"), CustomStyles.miniButtonLeft))
+							if(GUILayout.Button(new GUIContent("▲", "Move up"), CustomStyles.miniButtonLeft))
 							{
 								ContentMoveRequest.RequestIds(index, index - 1);
 							}
-
 
 							if(index == guiContentsArrayProperty.arraySize - 1)
 								GUI.enabled = false;
 							else
 								GUI.enabled = guiEnabledSave;
 
-							if(GUILayout.Button(new GUIContent("▼", "Descendre ce contenu"), CustomStyles.miniButtonMid))
+							if(GUILayout.Button(new GUIContent("▼", "Move down"), CustomStyles.miniButtonMid))
 							{
 								ContentMoveRequest.RequestIds(index, index + 1);
 							}
-
 
 							GUI.enabled = guiEnabledSave;
 							if(GUILayout.Button(new GUIContent("Reset", "Reset this content"), CustomStyles.miniButtonMid))
@@ -920,13 +859,13 @@ public class GuiContentInspector
 							}
 
 
-							// Il ne peut pas y avoir 0 contenu
+							// We should not have 0 content
 							if(guiContentsArrayProperty.arraySize <= 1)
 								GUI.enabled = false;
 							else
 								GUI.enabled = guiEnabledSave;
 
-							if(GUILayout.Button(new GUIContent("X", "Supprimer"), CustomStyles.miniButtonRight))
+							if(GUILayout.Button(new GUIContent("X", "Remove"), CustomStyles.miniButtonRight))
 							{
 								ContentRemoveRequest.RequestId(index);
 							}
@@ -937,7 +876,7 @@ public class GuiContentInspector
 						EditorGUILayout.EndHorizontal();
 
 
-						// Texte du GUIContent
+						// GUIContent's text
 						EditorGUILayout.BeginHorizontal();
 						{
 							SerializedProperty text = contentProperty.FindPropertyRelative("m_Text");
@@ -994,15 +933,15 @@ public class GuiContentInspector
 					EditorGUILayout.EndVertical();
 
 
-					// Couper prématurément la boucle si le type de ce GuiItemsCollection.GuiItem ne permet pas le multicontenus
+					// Cut prematurely the loop if this GuiItem's type does not permit multicontent
 					if((itemType != GuiItemsCollection.GuiItem.itemType.TOOLBAR) && (itemType != GuiItemsCollection.GuiItem.itemType.SELECTION_GRID))
 						break;
 
 
-					// Bouton pour ajouter un GUIContent
+					// Button to add a GUIContent
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.Space();
-					if(GUILayout.Button(new GUIContent("+", "Ajouter un contenu ici"), CustomStyles.littleButton))
+					if(GUILayout.Button(new GUIContent("+", "Add"), CustomStyles.littleButton))
 					{
 						ContentAddRequest.RequestId(index + 1);
 					}
@@ -1017,9 +956,9 @@ public class GuiContentInspector
 		GUILayout.EndVertical();
 
 
-		// Gérer les contents
+		// Manage contents
 		{
-			// Ajouter un GUIContent dans ce contents si requis
+			// Add
 			int newContentPositionId = ContentAddRequest.GetId();
 			if(newContentPositionId != -1)
 			{
@@ -1037,7 +976,7 @@ public class GuiContentInspector
 			}
 		}
 		{
-			// Retirer un GuiItemsCollection.GuiItem dans ce GuiItems si requis
+			// Remove
 			int contentToRemoveId = ContentRemoveRequest.GetId();
 			if(contentToRemoveId != -1)
 			{
@@ -1045,7 +984,7 @@ public class GuiContentInspector
 			}
 		}
 		{
-			// Intervertir des GuiItemsCollection.GuiItem dans ce GuiItems si requis
+			// Swap
 			int[] contentToMoveId = ContentMoveRequest.GetIds();
 			if(contentToMoveId.Length != 0)
 			{
@@ -1057,7 +996,7 @@ public class GuiContentInspector
 
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur d'ajouter un GuiItemsCollection.GuiItem dans le GuiItems
+/// Class to indicate the editor to add a GuiItem in the Collection.
 /// </summary>
 static public class AddRequest
 {
@@ -1066,9 +1005,9 @@ static public class AddRequest
 
 
 	/// <summary>
-	/// Définit l'id du GuiItemsCollection.GuiItem à ajouter.
+	/// Defines the id of the GuiItem to add.
 	/// </summary>
-	/// <param name="_id">Id que va prendre un nouveau GuiItemsCollection.GuiItem dans son conteneur GuiItems.</param>
+	/// <param name="_id">The Id used by the added GuiItem in the Collection.</param>
 	static public void RequestId(int _id)
 	{
 		id = _id;
@@ -1077,9 +1016,9 @@ static public class AddRequest
 
 
 	/// <summary>
-	/// Obtenir l'Id enregistré. Retourne -1 si l'id n'a pas été défini.
+	/// Retrieves the registered Id.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Id. Returns -1 if no id has been defined.</returns>
 	static public int GetId()
 	{
 		if(!requested)
@@ -1092,7 +1031,7 @@ static public class AddRequest
 }
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur de retirer un GuiItemsCollection.GuiItem dans le GuiItems
+/// Class to indicate the editor to remove a GuiItem from the Collection.
 /// </summary>
 static public class RemoveRequest
 {
@@ -1101,9 +1040,9 @@ static public class RemoveRequest
 
 
 	/// <summary>
-	/// Définit l'id du GuiItemsCollection.GuiItem à détruire.
+	/// Defines the id of the GuiItem to remove.
 	/// </summary>
-	/// <param name="_id">Id du GuiItemsCollection.GuiItem dans son conteneur GuiItems.</param>
+	/// <param name="_id">GuiItem's Id in its Collection.</param>
 	static public void RequestId(int _id)
 	{
 		id = _id;
@@ -1112,9 +1051,9 @@ static public class RemoveRequest
 
 
 	/// <summary>
-	/// Obtenir l'Id enregistré. Retourne -1 si l'id n'a pas été défini.
+	/// Retrieves the registered Id.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Id. Returns -1 if no id has been defined.</returns>
 	static public int GetId()
 	{
 		if(!requested)
@@ -1128,7 +1067,7 @@ static public class RemoveRequest
 
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur de bouger un GuiItemsCollection.GuiItem dans le GuiItems
+/// Class to indicate the editor to move a GuiItem in the Collection.
 /// </summary>
 static public class MoveRequest
 {
@@ -1138,10 +1077,10 @@ static public class MoveRequest
 
 
 	/// <summary>
-	/// Définit les id des GuiItemsCollection.GuiItem à intervertir.
+	/// Defines the ids of the GuiItem objects to swap.
 	/// </summary>
-	/// <param name="_id">Id du GuiItemsCollection.GuiItem dans son conteneur GuiItems qui change de place.</param>
-	/// <param name="_idToReplace">Id du GuiItemsCollection.GuiItem dans son conteneur GuiItems dont la place va être prise.</param>
+	/// <param name="_id">Id if the GuiItem to move.</param>
+	/// <param name="_idToReplace">Destination id.</param>
 	static public void RequestIds(int _id, int _idToReplace)
 	{
 		id = _id;
@@ -1151,9 +1090,9 @@ static public class MoveRequest
 
 
 	/// <summary>
-	/// Obtenir les Ids enregistrés. Retourne un tableau vide si les ids n'ont pas été définis.
+	/// Obtain registered Ids.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Ids. Returns an empty array if ids were not defined.</returns>
 	static public int[] GetIds()
 	{
 		if(!requested)
@@ -1167,7 +1106,7 @@ static public class MoveRequest
 
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur d'ajouter un GuiItemsCollection.GuiItem dans le GuiItems
+/// Class to indicate the editor to copy a GuiItem in the Collection.
 /// </summary>
 static public class CopyRequest
 {
@@ -1177,10 +1116,10 @@ static public class CopyRequest
 
 
 	/// <summary>
-	/// Définit l'id du GuiItemsCollection.GuiItem à copier et son futur id dans la liste.
+	/// Defines the id of the GuiItem to copy and the copy's future id.
 	/// </summary>
-	/// <param name="_id">Id que va prendre un nouveau GuiItemsCollection.GuiItem dans son conteneur GuiItems.</param>
-	/// <param name="_idToCopy">Id que va prendre un nouveau GuiItemsCollection.GuiItem dans son conteneur GuiItems.</param>
+	/// <param name="_id">Original's id in the Collection.</param>
+	/// <param name="_idToCopy">Destination id the Collection.</param>
 	static public void RequestId(int _id, int _idToCopy)
 	{
 		id = _id;
@@ -1190,9 +1129,9 @@ static public class CopyRequest
 
 
 	/// <summary>
-	/// Obtenir l'Id enregistré. Retourne -1 si l'id n'a pas été défini.
+	/// Retrieves the registered Id.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Id. Returns -1 if no id has been defined.</returns>
 	static public int GetId(out int _idToCopy)
 	{
 		_idToCopy = idToCopy;
@@ -1208,7 +1147,7 @@ static public class CopyRequest
 
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur d'ajouter un GUIContent dans le contents
+/// Class to indicate the editor to add a GUIContent in the contents list.
 /// </summary>
 static public class ContentAddRequest
 {
@@ -1228,9 +1167,9 @@ static public class ContentAddRequest
 
 
 	/// <summary>
-	/// Obtenir l'Id enregistré. Retourne -1 si l'id n'a pas été défini.
+	/// Retrieves the registered Id.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Id. Returns -1 if no id has been defined.</returns>
 	static public int GetId()
 	{
 		if(!requested)
@@ -1244,7 +1183,7 @@ static public class ContentAddRequest
 
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur de retirer un GUIContent dans le contents
+/// Class to indicate the editor to remove a GUIContent from the contents list.
 /// </summary>
 static public class ContentRemoveRequest
 {
@@ -1253,9 +1192,9 @@ static public class ContentRemoveRequest
 
 
 	/// <summary>
-	/// Définit l'id du GUIContent à détruire.
+	/// Defines the id of the GUIContent to remove.
 	/// </summary>
-	/// <param name="_id">Id du GUIContent dans son conteneur contents.</param>
+	/// <param name="_id">GUIContent's Id in its contents array.</param>
 	static public void RequestId(int _id)
 	{
 		id = _id;
@@ -1264,9 +1203,9 @@ static public class ContentRemoveRequest
 
 
 	/// <summary>
-	/// Obtenir l'Id enregistré. Retourne -1 si l'id n'a pas été défini.
+	/// Retrieves the registered Id.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Id. Returns -1 if no id has been defined.</returns>
 	static public int GetId()
 	{
 		if(!requested)
@@ -1280,7 +1219,7 @@ static public class ContentRemoveRequest
 
 
 /// <summary>
-/// Classe pour indiquer à l'éditeur de bouger un GUIContent dans le contents
+/// Class to indicate the editor to move a GUIContent in the contents list.
 /// </summary>
 static public class ContentMoveRequest
 {
@@ -1290,10 +1229,10 @@ static public class ContentMoveRequest
 
 
 	/// <summary>
-	/// Définit les id des GUIContent à intervertir.
+	/// Defines the ids of the GUIContent objects to swap.
 	/// </summary>
-	/// <param name="_id">Id du GUIContent dans son conteneur contents qui change de place.</param>
-	/// <param name="_idToReplace">Id du GUIContent dans son conteneur contents dont la place va être prise.</param>
+	/// <param name="_id">Id if the GUIContent to move.</param>
+	/// <param name="_idToReplace">Destination id.</param>
 	static public void RequestIds(int _id, int _idToReplace)
 	{
 		id = _id;
@@ -1303,9 +1242,9 @@ static public class ContentMoveRequest
 
 
 	/// <summary>
-	/// Obtenir les Ids enregistrés. Retourne un tableau vide si les ids n'ont pas été définis.
+	/// Obtain registered Ids.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The Ids. Returns an empty array if ids were not defined.</returns>
 	static public int[] GetIds()
 	{
 		if(!requested)
@@ -1333,7 +1272,6 @@ static public class CustomStyles
 			GUIStyle gs = new GUIStyle(GUI.skin.button);
 			gs.alignment = TextAnchor.MiddleCenter;
 			gs.padding = new RectOffset(0, 0, 0, 0);
-			//gs.fixedHeight = 15f;
 			gs.fixedWidth = 30f;
 			gs.clipping = TextClipping.Overflow;
 			gs.padding.right += 3;
@@ -1389,7 +1327,6 @@ static public class CustomStyles
 			gs.normal.background = EditorGUIUtility.FindTexture("../GuiItems/Textures/texturePreviewChecker.png");
 			gs.font = EditorStyles.boldFont;
 			gs.fontSize = 10;
-			//gs.normal.textColor = Color.white;
 			gs.padding = new RectOffset(0, 0, 0, 0);
 
 			return gs;

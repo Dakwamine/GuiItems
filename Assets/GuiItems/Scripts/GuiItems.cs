@@ -4,25 +4,19 @@ using System.Collections;
 abstract public class GuiItems
 {
 	/// <summary>
-	/// Classe à utiliser pour référencer des GUIStyle avec un custom editor.
+	/// GUIStyle with a custom inspector.
 	/// </summary>
 	[System.Serializable]
 	public class GUIStyleExtension
 	{
 		public GUIStyle guiStyle;
 
-//#if UNITY_EDITOR
-		//public Object[] showTextStyle = new Object[0];
+		//#if UNITY_EDITOR
 		public bool showTextStyle = false;
 		public bool showTextColor = false;
 		public bool showBackgroundTextures = false;
 		public bool showMisc = false;
-//#endif
-
-		/*public void ReplaceGUIStyle(GUIStyle _guiStyle)
-		{
-			guiStyle = new GUIStyle(_guiStyle);
-		}*/
+		//#endif
 
 		/// <summary>
 		/// Creates a blank GUIStyleExtension.

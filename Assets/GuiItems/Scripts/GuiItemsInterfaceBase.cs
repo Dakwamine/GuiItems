@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 /// <summary>
-/// Classe pour lister les valeurs des différents éléments TextField, TextArea, PasswordField.
+/// Class which lists values from TEXT_FIELD, TEXT_AREA and PASSWORD_FIELD.
 /// </summary>
 public class GuiItemReturnValue
 {
@@ -36,13 +36,13 @@ public class GuiItemReturnValue
 abstract public class GuiItemsInterfaceBase : MonoBehaviour
 {
 	/// <summary>
-	/// Liste des champs de valeurs.
+	/// Lists fields values.
 	/// </summary>
 	protected List<GuiItemReturnValue> guiItemFieldValues;
 
 
 	/// <summary>
-	/// GuiItems dont cet objet est associé. Permet de vérifier les entrées textes.
+	/// GuiItemsCollection reference which shares the same transform. Text fields can be checked this way.
 	/// </summary>
 	protected GuiItemsCollection associatedGuiItems
 	{
@@ -54,16 +54,16 @@ abstract public class GuiItemsInterfaceBase : MonoBehaviour
 
 
 	/// <summary>
-	/// Fonction qui reçoit les évènements provenant de GuiItems.
+	/// Called when the GuiItem in parameter has launched an event.
 	/// </summary>
-	/// <param name="guiItem">GuiItem qui a envoyé l'évènement.</param>
+	/// <param name="guiItem">GuiItem which triggered the event.</param>
 	abstract public void ReceiveEvent(GuiItemsCollection.GuiItem guiItem);
 
 
 	/// <summary>
-	/// Fonction lancée lorsque le guiItem indiqué en paramètre a été survolé.
+	/// Called when the GuiItem in parameter has been hovered.
 	/// </summary>
-	/// <param name="guiItem">GuiItem qui a envoyé l'évènement.</param>
+	/// <param name="guiItem">GuiItem which triggered the event</param>
 	abstract public void OnHover(GuiItemsCollection.GuiItem guiItem);
 
 
@@ -75,7 +75,7 @@ abstract public class GuiItemsInterfaceBase : MonoBehaviour
 
 	void OnGUI()
 	{
-		// Vider la liste
+		// Empty previous field values
 		guiItemFieldValues.Clear();
 
 		foreach(GuiItemsCollection.GuiItem g in associatedGuiItems.items)
@@ -86,18 +86,15 @@ abstract public class GuiItemsInterfaceBase : MonoBehaviour
 				case GuiItemsCollection.GuiItem.itemType.TEXT_AREA:
 				case GuiItemsCollection.GuiItem.itemType.TEXT_FIELD:
 					guiItemFieldValues.Add(new GuiItemReturnValue(g, g.content.text));
-					//Debug.Log(g.tag + " : " + guiItemFieldValues[guiItemFieldValues.Count - 1].fieldValue);
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.TOOLBAR:
 				case GuiItemsCollection.GuiItem.itemType.SELECTION_GRID:
 					guiItemFieldValues.Add(new GuiItemReturnValue(g, g.selected));
-					//Debug.Log(g.tag + " : " + guiItemFieldValues[guiItemFieldValues.Count - 1].selected);
 					break;
 
 				case GuiItemsCollection.GuiItem.itemType.TOGGLE:
 					guiItemFieldValues.Add(new GuiItemReturnValue(g, g.toggle));
-					//Debug.Log(g.tag + " : " + guiItemFieldValues[guiItemFieldValues.Count - 1].toggle);
 					break;
 			}
 		}

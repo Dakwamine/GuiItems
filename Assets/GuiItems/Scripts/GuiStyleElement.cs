@@ -5,7 +5,7 @@ using System.Collections;
 public class GuiStyleElement : MonoBehaviour
 {
 	/// <summary>
-	/// Style de ce GuiStyleElement.
+	/// The GUIStyle of this GuiStyleElement.
 	/// </summary>
 	public GUIStyle guiStyle
 	{
@@ -20,7 +20,7 @@ public class GuiStyleElement : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Objet GUIStyleExtension référencé qui contient le style et les paramètres éditeur.
+	/// GUIStyleExtension object containing a GUIStyle object and additional editor parameters.
 	/// </summary>
 	public GuiItems.GUIStyleExtension guiStyleExtension;
 }

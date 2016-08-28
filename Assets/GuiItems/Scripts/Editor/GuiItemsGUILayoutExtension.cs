@@ -33,8 +33,6 @@ public class GuiItemsGUILayoutExtension
 	/// <returns>Foldout state.</returns>
 	public static bool FoldoutButton(bool _state, GUIContent _content)
 	{
-		//return EditorGUILayout.Foldout(_state, _content);
-
 		bool b = false;
 
 		if(_state)
@@ -79,7 +77,7 @@ public class GuiItemsGUILayoutExtension
 	/// <param name="_content">The label to show.</param>
 	public static void ColorFieldProperty(SerializedProperty _property, GUIContent _content = null)
 	{
-		// On utilise la surcharge adaptée car la surcharge EditorGUILayout.ColorField(GUIContent, Color) bug à l'affichage (largeur plus grande pour une raison inconnue)
+		// We use the appropriate overload because EditorGUILayout.ColorField(GUIContent, Color) bugs on draw (width is larger for unknown reason)
 		Color c = _content == GUIContent.none || _content == null ? EditorGUILayout.ColorField(_property.colorValue) : EditorGUILayout.ColorField(_content, _property.colorValue);
 
 		if(c != _property.colorValue)
@@ -168,8 +166,7 @@ public class GuiItemsGUILayoutExtension
 			GUI.color = Color.green;
 
 		b = GUILayout.Button(content, _guiStyle, GUILayout.ExpandWidth(false));
-		//else
-		//	b = GUILayout.Button(content, _guiStyle, GUILayout.ExpandWidth(false));
+
 		if(state)
 			GUI.color = guiColorSave;
 		if(b)

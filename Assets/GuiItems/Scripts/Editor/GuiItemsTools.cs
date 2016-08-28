@@ -95,7 +95,6 @@ static public class GuiItemsTools
 			_destination.FindPropertyRelative("m_FontSize").intValue = _original.fontSize;
 			_destination.FindPropertyRelative("m_WordWrap").boolValue = _original.wordWrap;
 			_destination.FindPropertyRelative("m_TextClipping").intValue = (int)_original.clipping;
-			//_destination.FindPropertyRelative("m_TextClipping").intValue = (int)_original.clipping;
 
 			_destination.FindPropertyRelative("m_Alignment").enumValueIndex = (int)_original.alignment;
 			_destination.FindPropertyRelative("m_ImagePosition").enumValueIndex = (int)_original.imagePosition;
@@ -134,7 +133,7 @@ static public class GuiItemsTools
 	/// <param name="_destination">GuiItem destination.</param>
 	static public void CopyPropertyValues(SerializedProperty _source, SerializedProperty _destination)
 	{
-		// Vérifier si les types des objets sont identiques
+		// Check if object types are the same
 		if(_source.type != _destination.type)
 		{
 			Debug.LogError("Not the same property types between _source and _destination.");
@@ -142,7 +141,7 @@ static public class GuiItemsTools
 		}
 
 
-		// Créer de nouveaux itérateurs pour éviter de travailler sur les itérateurs originaux
+		// Create new iterator to prevent working on the original iterators
 		SerializedProperty source = _source.Copy();
 		SerializedProperty destination = _destination.Copy();
 
@@ -211,11 +210,10 @@ static public class GuiItemsTools
 	/// <summary>
 	/// Resets a Serialized Property GuiItem and all its contents into another.
 	/// </summary>
-	/// <param name="_source">GuiItem source.</param>
-	/// <param name="_property">GuiItem destination.</param>
+	/// <param name="_property">GuiItem serialized property.</param>
 	static public void ResetPropertyValues(SerializedProperty _property)
 	{
-		// Créer un nouvel itérateur pour éviter de travailler sur l'itérateur original
+		// Create new iterator to prevent working on the original iterators
 		SerializedProperty property = _property.Copy();
 
 

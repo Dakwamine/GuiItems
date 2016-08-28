@@ -6,49 +6,49 @@ using System.Collections.Generic;
 public class GuiItemsCollection : MonoBehaviour
 {
 	/// <summary>
-	/// Est-ce que cette collection est affichée ?
+	/// Is this collection actually drawn?
 	/// </summary>
 	public bool draw = true;
 
 
 	/// <summary>
-	/// Est-ce que l'on veut utiliser la propriété area pour définir la zone de rendu ?
+	/// Do we want to use the area property to define the render area?
 	/// </summary>
 	public bool useArea = true;
 
 
 	/// <summary>
-	/// Zone d'affichage des éléments.
+	/// Defines the render area if useArea is true.
 	/// </summary>
 	public GuiItem.RectExtension area = new GuiItem.RectExtension();
 
 
 	/// <summary>
-	/// Est-ce que ce GuiITtems utilise la position du transform pour se positionner ?
+	/// If useArea = true, is this GuiItemsCollection use the transform's position instead of the area (x,y)?
 	/// </summary>
 	public bool useTransformPosition = false;
 
 
 	/// <summary>
-	/// Ordre d'affichage de ce GuiItems.
+	/// Defines the display order between this collection and another.
 	/// </summary>
 	public int depth = 0;
 
 
 	/// <summary>
-	/// Liste des objets contenus dans ce GuiItems.
+	/// Contains the GuiItem elements to draw.
 	/// </summary>
 	public List<GuiItemsCollection.GuiItem> items = new List<GuiItem>();
 
 
 	/// <summary>
-	/// Variable pour l'inspecteur pour indiquer si la liste des objets doit être affichée.
+	/// Editor value which indicates if we want to show the GuiItem list in the inspector.
 	/// </summary>
 	public bool editor_showItemsList = false;
 
 
 	/// <summary>
-	/// Objet GuiItemsInterface qui va réceptionner les events activés par les éléments de ce GuiItems.
+	/// GuiItemsInterface object for event handling of this collection.
 	/// </summary>
 	public GuiItemsInterfaceBase guiItemsInterface
 	{
@@ -66,23 +66,19 @@ public class GuiItemsCollection : MonoBehaviour
 
 	public void Draw()
 	{
-		// Ne pas afficher si la collection est désactivée
 		if(!draw)
 			return;
 
 
-		// Mise à jour de la matrice GUI
-		Vector2 correction = GuiItemsDrawer.FittingRatio;
-
-
-		// Le "+2" permet d'augmenter la zone de rendu GUI pour couvrir les bords de l'écran qui sont transparents sur certaines résolutions
-		float resX = (Screen.width + 2) / (GuiItemsDrawer.DesignResolution.x * correction.x);
-		float resY = (Screen.height + 2) / (GuiItemsDrawer.DesignResolution.y * correction.y);
+		// GUI matrix update
+		// The "+2" covers the transparent borders on some screen resolutions.
+		float resX = (Screen.width + 2) / (GuiItemsDrawer.DesignResolution.x * GuiItemsDrawer.FittingRatio.x);
+		float resY = (Screen.height + 2) / (GuiItemsDrawer.DesignResolution.y * GuiItemsDrawer.FittingRatio.y);
 
 		GUI.matrix = Matrix4x4.TRS(new Vector3(-1f, -1f, 0f), Quaternion.identity, new Vector3(resX, resY, 1f));
 
 
-		// Calcul de la zone
+		// Area computing
 		if(useArea)
 		{
 			Rect realArea;
@@ -112,7 +108,7 @@ public class GuiItemsCollection : MonoBehaviour
 			GUILayout.EndArea();
 
 
-		// Appeler GuiItemsScriptedInterface si l'objet contient le component
+		// Call the GuiItemsScriptedInterface child components
 		GuiItemsScriptedInterface[] gisi = GetComponents<GuiItemsScriptedInterface>();
 
 		foreach(GuiItemsScriptedInterface g in gisi)
@@ -148,13 +144,13 @@ public class GuiItemsCollection : MonoBehaviour
 	public class GuiItem
 	{
 		/// <summary>
-		/// GuiItems qui a créé ce GuiItem.
+		/// GuiItemsCollection which created this GuiItem.
 		/// </summary>
-		public GuiItemsCollection guiItems;
+		public GuiItemsCollection guiItemsCollection;
 
 
 		/// <summary>
-		/// Type d'objet GUI.
+		/// GUI item type.
 		/// </summary>
 		public enum itemType
 		{
@@ -180,74 +176,74 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// Type de cet objet.
+		/// This item type.
 		/// </summary>
 		public itemType thisItemType = itemType.LABEL;
 
 
 		/// <summary>
-		/// Est-ce que ce GuiItem est affiché ?
+		/// Is this GuiItem drawn?
 		/// </summary>
 		public bool enabled = true;
 
 
 		/// <summary>
-		/// Est-ce que ce GuiItem est activé ? En gros, définit si cet élément est interactif (il reste affiché)
+		/// Is this GuiItem activated / is it interactive? (it is still drawn)
 		/// </summary>
 		public bool activated = true;
 
 
 		/// <summary>
-		/// Tag de cet objet, pour que le GuiItemsInterfaceBase puisse connaître associer un nom aux valeurs de sa liste de GuiItemReturnValue.
+		/// This GuiItem name. This is needed for GuiItemsInterfaceBase children for event handling. Can be empty.
 		/// </summary>
 		public string tag = "";
 
 
 		/// <summary>
-		/// Couleur de cet objet.
+		/// Color of this GuiItem.
 		/// </summary>
 		public Color color = Color.white;
 
 
 		/// <summary>
-		/// Nom de l'évènement à traiter lorsque le bouton s'active.
+		/// Name of the event to launch when this button is activated.
 		/// </summary>
 		public string eventToLaunch = "";
 
 
 		/// <summary>
-		/// Paramètre à envoyer.
+		/// Parameter to send.
 		/// </summary>
 		public string parameter = "";
 
 
 		/// <summary>
-		/// Rotation à appliquer sur cet élément ainsi que les suivants.
+		/// Rotation to apply on this GuiItem and subsequent ones.
 		/// </summary>
 		public float rotationAngle = 0f;
 		public GuiItem.Vector2Extension pivotPoint = new Vector2Extension();
 
 
 		/// <summary>
-		/// Est-ce que ce GuiItem doit boucler ?
+		/// Does this GuiItem needs to loop? Implemented only for LABEL items for horizontal loops.
 		/// </summary>
 		public bool loop = false;
 
 
 		/// <summary>
-		/// Décalage du bouclage en pixels.
+		/// Loop offset in pixels.
 		/// </summary>
 		public float loopOffset = 0f;
 
 
 		/// <summary>
-		/// Vitesse de déplacement.
+		/// Loop scroll speed in pixels / second.
 		/// </summary>
 		public float loopScrollSpeed = 0f;
 
 
 		/// <summary>
-		/// Rect réel du contenu du label à boucler.
+		/// The real rect area of the label to loop.
 		/// </summary>
 		public Rect LoopLabelRect
 		{
@@ -260,13 +256,13 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// Indique si la variable loopLabelRect a été définie.
+		/// Indicates if loopLabelRect has been defined.
 		/// </summary>
 		private bool loopLabelRectDefined = false;
 
 
 		/// <summary>
-		/// Dernier rectangle contenant l'élément.
+		/// Last rectangle which contains the element.
 		/// </summary>
 		public Rect LastRect
 		{
@@ -280,12 +276,13 @@ public class GuiItemsCollection : MonoBehaviour
 
 		/// <summary>
 		/// Contenu(s) de ce GuiItem. Seul la première entrée est utilisée par les éléments, à part Toolbar et SelectionGrid.
+		/// Content(s) of this GuiItem. Only the first entry is used, TOOLBAR and SELECTION_GRID apart.
 		/// </summary>
 		public List<GUIContent> contents = new List<GUIContent>();
 
 
 		/// <summary>
-		/// Version Array de contents
+		/// Read-only contents list in an Array flavour.
 		/// </summary>
 		public GUIContent[] contentsArray
 		{
@@ -297,7 +294,7 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// Premier contenu de ce GuiItem, utilisé par les éléments qui n'utilisent qu'un seul GUIContent.
+		/// First content shortcut of this GuiItem. Used by this GuiItem if it uses a single GUIContent.
 		/// </summary>
 		public GUIContent content
 		{
@@ -313,7 +310,7 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// Caractère de masque pour le mot de passe. La version char est celle utilisée par l'élement final, la version string est utilisée par l'éditeur.
+		/// Mask character for passwords. The char value is used in play mode; the string value is used in the editor.
 		/// </summary>
 		private char _maskChar
 		{
@@ -326,121 +323,121 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// Longueur maximale du texte du textField et autres.
+		/// Max text length for TEXT_FIELD and others.
 		/// </summary>
 		public int maxLength = -1;
 
 
 		/// <summary>
-		/// Valeur du Toggle.
+		/// TOGGLE value.
 		/// </summary>
 		public bool toggle = false;
 
 
 		/// <summary>
-		/// Valeur retournée par Toolbar, entre autres.
+		/// Returned value of TOOLBAR and others.
 		/// </summary>
 		public int selected = 0;
 
 
 		/// <summary>
-		/// Nombre d'objets dans une ligne de SelectionGrid.
+		/// Column count in a SELECTION_GRID.
 		/// </summary>
 		public int xCount = 3;
 
 
 		/// <summary>
-		/// Espacement utilisé par GuiLayout.Space().
+		/// Space used by GuiLayout.Space().
 		/// </summary>
 		public float pixels = 0f;
 
 
 		/// <summary>
-		/// Position du scroll view.
+		/// SCROLL_VIEW position.
 		/// </summary>
 		public Vector2 scrollViewPosition = new Vector2();
 
 
 		/// <summary>
-		/// Toujours montrer la barre horizontale du scrollview ?
+		/// Always show the SCROLL_VIEW horizontal bar?
 		/// </summary>
 		public bool alwaysShowHorizontal = false;
 
 
 		/// <summary>
-		/// Toujours montrer la barre verticale du scrollview ?
+		/// Always show the SCROLL_VIEW vertical bar?
 		/// </summary>
 		public bool alwaysShowVertical = false;
 
 
 		/// <summary>
-		/// Style de la barre horizontale du scrollview.
+		/// SCROLL_VIEW horizontal bar style.
 		/// </summary>
 		public GuiStyleElement horizontalScrollbarStyle = null;
 
 
 		/// <summary>
-		/// Style de la barre verticale du scrollview.
+		/// SCROLL_VIEW vertical bar style.
 		/// </summary>
 		public GuiStyleElement verticalScrollbarStyle = null;
 
 
 		/// <summary>
-		/// Style du fond du scrollview.
+		/// SCROLL_VIEW background style.
 		/// </summary>
 		public GuiStyleElement backgroundStyle = null;
 
 
 		/// <summary>
-		/// Modes de style de ce GuiItem.
+		/// GuiItem style mode enum.
 		/// </summary>
 		public enum guiStyleMode
 		{
 			/// <summary>
-			/// Force le style sur le style par défaut.
+			/// Use the default style.
 			/// </summary>
 			DEFAULT,
 
 
 			/// <summary>
-			/// Reprend le fil des styles utilisés précédemment.
+			/// Use the same style as the previous GuiItem.
 			/// </summary>
 			NO_STYLE,
 
 
 			/// <summary>
-			/// Utilise le style spécifié par un GuiStyleElement.
+			/// Use the style defined by the GuiStyleElement reference.
 			/// </summary>
 			GUI_STYLE_ELEMENT,
 
 
 			/// <summary>
-			/// Permet de copier et personnaliser le style utilisé actuellement.
+			/// Special style used only on this GuiItem.
 			/// </summary>
 			CUSTOM_STYLE
 		}
 
 
 		/// <summary>
-		/// Mode de style utilisé actuellement.
+		/// Current style mode of this GuiItem.
 		/// </summary>
 		public guiStyleMode thisGuiStyleMode = guiStyleMode.DEFAULT;
 
 
 		/// <summary>
-		/// Référence à un objet guiStyleElement qui stocke un GUIStyle séparément de ce GuiItems.
+		/// GuiStyleElement object reference for GUI_STYLE_ELEMENT mode.
 		/// </summary>
 		public GuiStyleElement guiStyleElement = null;
 
 
 		/// <summary>
-		/// Style personnalisé de cet objet (GUIStyleExtension).
+		/// Custom style for CUSTOM_STYLE mode.
 		/// </summary>
 		public GuiItems.GUIStyleExtension customStyle = new GuiItems.GUIStyleExtension();
 
 
 		/// <summary>
-		/// Accès direct au style personnalisé de cet objet.
+		/// Direct access to this GuiItem's customStyle style.
 		/// </summary>
 		public GUIStyle CustomStyle
 		{
@@ -456,13 +453,13 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// GUISkin pour ScrollView (le GUIStyle ne fonctionne pas directement sur les BeginScrollView())?
+		/// GUISkin for SCROLL_VIEW (is the GUIStyle not straightforwardingly working on BeginScrollView()?)
 		/// </summary>
 		public GUISkin guiSkin;
 
 
 		/// <summary>
-		/// Est-ce que la souris est sur cet élément ?
+		/// Is the mouse cursor on this GuiItem?
 		/// </summary>
 		private bool _hover = false;
 		public bool hover
@@ -476,8 +473,8 @@ public class GuiItemsCollection : MonoBehaviour
 			{
 				if(!_hover && value)
 				{
-					if(guiItems.guiItemsInterface)
-						guiItems.guiItemsInterface.OnHover(this);
+					if(guiItemsCollection.guiItemsInterface)
+						guiItemsCollection.guiItemsInterface.OnHover(this);
 				}
 
 				_hover = value;
@@ -487,41 +484,42 @@ public class GuiItemsCollection : MonoBehaviour
 
 		//#if UNITY_EDITOR
 		/// <summary>
-		/// Variable pour l'inspecteur pour indiquer si cet élément doit être affiché.
+		/// Inspector variable. Indicates if this GuiItem is folded.
 		/// </summary>
 		public bool editor_folded = false;
 
 
 		/// <summary>
-		/// Variable pour l'inspecteur pour indiquer si les contenus de cet élément sont repliés.
+		/// Inspector variable. Indicates if the contents of this GuiItem are folded.
 		/// </summary>
 		public bool editor_contentsFolded = false;
 
 
 		/// <summary>
-		/// Indique si cet objet affiche les paramètres de style ou pas.
+		/// Inspector variable. Indicates if the style values are folded.
 		/// </summary>
 		public bool editor_styleFolded = false;
 		//#endif
 
 
 		/// <summary>
-		/// Constructeur de ce GuiItem. Indiquer le GuiItems qui a créé cet objet
+		/// Constructor.
 		/// </summary>
+		/// <param name="_guiItems">Collection which created this GuiItem.</param>
 		public GuiItem(GuiItemsCollection _guiItems)
 		{
 			contents.Add(new GUIContent());
-			guiItems = _guiItems;
+			guiItemsCollection = _guiItems;
 		}
 
 
 		/// <summary>
-		/// Copie du GuiItem indiqué.
+		/// Creates by copying an existing GuiItem.
 		/// </summary>
-		/// <param name="original"></param>
+		/// <param name="original">The original GuiItem.</param>
 		public GuiItem(GuiItemsCollection.GuiItem original)
 		{
-			this.guiItems = original.guiItems;
+			this.guiItemsCollection = original.guiItemsCollection;
 			this.thisItemType = original.thisItemType;
 			this.enabled = original.enabled;
 			this.activated = original.activated;
@@ -535,7 +533,7 @@ public class GuiItemsCollection : MonoBehaviour
 			this.loopOffset = original.loopOffset;
 			this.loopScrollSpeed = original.loopScrollSpeed;
 			this.loopLabelRect = new Rect(original.loopLabelRect);
-			this.loopLabelRectDefined = false; // Garder à false pour forcer à se régénérer
+			this.loopLabelRectDefined = false; // Keep to false to force rect redefinition
 			this.lastRect = new Rect();
 			this.contents = new List<GUIContent>();
 			foreach(GUIContent gc in original.contents)
@@ -565,20 +563,21 @@ public class GuiItemsCollection : MonoBehaviour
 		{
 			if(rotationAngle != 0f)
 			{
-				// La rotation se fait toujours autour du point dans le Current Screen Space, pas le Standard
+				// Rotation is always around the pivot point in current screen space, not the standard screen space
 				GUIUtility.RotateAroundPivot(rotationAngle, pivotPoint.CurrentSpaceValue);
 			}
 
 
-			// Désactiver le GUI si l'élément n'est pas activé
+			// Disable GUI if this element is not activated
 			if(!activated)
 				GUI.enabled = false;
 
-			// Sauvegarder la couleur du GUI actuelle
+
+			// Save the current GUI color
 			Color colorSave = GUI.color;
 
 
-			// Changer la couleur du GUI
+			// Change the GUI color
 			GUI.color = color;
 
 
@@ -587,10 +586,10 @@ public class GuiItemsCollection : MonoBehaviour
 				case itemType.LABEL:
 					if(loop)
 					{
-						// Faire un label vide pour obtenir les limites de l'objet
+						// Make an empty label to obtain the GuiItem limits
 						if(thisGuiStyleMode == guiStyleMode.DEFAULT)
 						{
-							// Obtenir la taille de l'élément réel
+							// Obtain the real GuiItem limits
 							if(!loopLabelRectDefined)
 							{
 								loopLabelRect = GUILayoutUtility.GetRect(content, GUI.skin.label);
@@ -606,7 +605,7 @@ public class GuiItemsCollection : MonoBehaviour
 						{
 							if(guiStyleElement != null)
 							{
-								// Obtenir la taille de l'élément réel
+								// Obtain the real GuiItem limits
 								if(!loopLabelRectDefined)
 								{
 									loopLabelRect = GUILayoutUtility.GetRect(content, guiStyleElement.guiStyle);
@@ -619,7 +618,7 @@ public class GuiItemsCollection : MonoBehaviour
 							}
 							else
 							{
-								// Obtenir la taille de l'élément réel
+								// Obtain the real GuiItem limits
 								if(!loopLabelRectDefined)
 								{
 									loopLabelRect = GUILayoutUtility.GetRect(content, GUI.skin.label);
@@ -628,13 +627,13 @@ public class GuiItemsCollection : MonoBehaviour
 
 								GUIStyle g = new GUIStyle(GUI.skin.label);
 								g.stretchWidth = true;
-								Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+								Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 								GUILayout.Label("", g, GUILayout.MinWidth(1f));
 							}
 						}
 						else if(thisGuiStyleMode == guiStyleMode.CUSTOM_STYLE)
 						{
-							// Obtenir la taille de l'élément réel
+							// Obtain the real GuiItem limits
 							if(!loopLabelRectDefined)
 							{
 								loopLabelRect = GUILayoutUtility.GetRect(content, CustomStyle);
@@ -646,7 +645,7 @@ public class GuiItemsCollection : MonoBehaviour
 						}
 						else
 						{
-							// Obtenir la taille de l'élément réel
+							// Obtain the real GuiItem limits
 							if(!loopLabelRectDefined)
 							{
 								loopLabelRect = GUILayoutUtility.GetRect(content, GUI.skin.label);
@@ -668,7 +667,7 @@ public class GuiItemsCollection : MonoBehaviour
 								GUILayout.Label(content, guiStyleElement.guiStyle);
 							else
 							{
-								Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+								Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 								GUILayout.Label(content);
 							}
 						}
@@ -688,7 +687,7 @@ public class GuiItemsCollection : MonoBehaviour
 							GUILayout.Box(content, guiStyleElement.guiStyle);
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 							GUILayout.Box(content);
 						}
 					}
@@ -702,20 +701,20 @@ public class GuiItemsCollection : MonoBehaviour
 				case itemType.BUTTON:
 					if(DisplayButton())
 					{
-						if(guiItems.guiItemsInterface == null)
+						if(guiItemsCollection.guiItemsInterface == null)
 							Debug.LogError("Cannot send event. No interface found. You have to add a GuiItemsInterface script on this game object.");
 						else
-							guiItems.guiItemsInterface.ReceiveEvent(this);
+							guiItemsCollection.guiItemsInterface.ReceiveEvent(this);
 					}
 					break;
 
 				case itemType.REPEAT_BUTTON:
 					if(DisplayRepeatButton())
 					{
-						if(guiItems.guiItemsInterface == null)
+						if(guiItemsCollection.guiItemsInterface == null)
 							Debug.LogError("Cannot send event. No interface found. You have to add a GuiItemsInterface script on this game object.");
 						else
-							guiItems.guiItemsInterface.ReceiveEvent(this);
+							guiItemsCollection.guiItemsInterface.ReceiveEvent(this);
 					}
 					break;
 
@@ -738,7 +737,7 @@ public class GuiItemsCollection : MonoBehaviour
 						}
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							if(maxLength < 0)
 								content.text = GUILayout.TextField(content.text);
@@ -782,7 +781,7 @@ public class GuiItemsCollection : MonoBehaviour
 						}
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							if(maxLength < 0)
 								content.text = GUILayout.PasswordField(content.text, _maskChar);
@@ -826,7 +825,7 @@ public class GuiItemsCollection : MonoBehaviour
 						}
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							if(maxLength < 0)
 								content.text = GUILayout.TextField(content.text);
@@ -860,7 +859,7 @@ public class GuiItemsCollection : MonoBehaviour
 							toggle = GUILayout.Toggle(toggle, content, guiStyleElement.guiStyle);
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							toggle = GUILayout.Toggle(toggle, content);
 						}
@@ -881,7 +880,7 @@ public class GuiItemsCollection : MonoBehaviour
 							selected = GUILayout.Toolbar(selected, contentsArray, guiStyleElement.guiStyle);
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							selected = GUILayout.Toolbar(selected, contentsArray);
 						}
@@ -902,7 +901,7 @@ public class GuiItemsCollection : MonoBehaviour
 							selected = GUILayout.SelectionGrid(selected, contentsArray, xCount, guiStyleElement.guiStyle);
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							selected = GUILayout.SelectionGrid(selected, contentsArray, xCount);
 						}
@@ -949,7 +948,7 @@ public class GuiItemsCollection : MonoBehaviour
 						}
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							GUILayout.BeginHorizontal();
 						}
@@ -1001,7 +1000,7 @@ public class GuiItemsCollection : MonoBehaviour
 						}
 						else
 						{
-							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+							Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 
 							GUILayout.BeginVertical();
 						}
@@ -1042,8 +1041,9 @@ public class GuiItemsCollection : MonoBehaviour
 					}
 
 					break;
+
+				#region BEGIN_SCROLL_VIEW does not support styles (Unity Engine bug)
 				/*
-				case itemType.BEGIN_SCROLL_VIEW:
 					if(thisGuiStyleMode == guiStyleMode.DEFAULT)
 						scrollViewPosition = GUILayout.BeginScrollView(scrollViewPosition, alwaysShowHorizontal, alwaysShowVertical, horizontalScrollbarStyle == null ? GUI.skin.horizontalScrollbar : horizontalScrollbarStyle.guiStyle, verticalScrollbarStyle == null ? GUI.skin.verticalScrollbar : verticalScrollbarStyle.guiStyle, GUI.skin.scrollView);
 					else if(thisGuiStyleMode == guiStyleMode.GUI_STYLE_ELEMENT)
@@ -1063,7 +1063,8 @@ public class GuiItemsCollection : MonoBehaviour
 						scrollViewPosition = GUILayout.BeginScrollView(scrollViewPosition, alwaysShowHorizontal, alwaysShowVertical, horizontalScrollbarStyle == null ? GUI.skin.horizontalScrollbar : horizontalScrollbarStyle.guiStyle, verticalScrollbarStyle == null ? GUI.skin.verticalScrollbar : verticalScrollbarStyle.guiStyle);
 
 					break;
-				 */
+				     */
+				#endregion
 
 				case itemType.END_SCROLL_VIEW:
 					GUILayout.EndScrollView();
@@ -1072,7 +1073,7 @@ public class GuiItemsCollection : MonoBehaviour
 
 			if((thisItemType != itemType.BEGIN_HORIZONTAL) && (thisItemType != itemType.BEGIN_VERTICAL) && (thisItemType != itemType.BEGIN_SCROLL_VIEW))
 			{
-				// Attendre Repaint pour vérifier les positionnements
+				// Wait for Repaint to check positionings
 				if(Event.current.type == EventType.Repaint)
 				{
 					lastRect = GUILayoutUtility.GetLastRect();
@@ -1080,13 +1081,14 @@ public class GuiItemsCollection : MonoBehaviour
 					hover = lastRect.Contains(Event.current.mousePosition);
 
 
-					// Si cet élément est un label qui boucle
+					// If this GuiItem is a non-empty looping LABEL
 					if(thisItemType == itemType.LABEL && loop && lastRect.width != 0f)
 					{
 						loopLabelRectDefined = true;
 
 
-						// Ajouter des éléments à gauche
+						#region Add copies to the left
+
 						Rect r = new Rect(lastRect);
 
 						GUI.BeginGroup(r);
@@ -1097,7 +1099,7 @@ public class GuiItemsCollection : MonoBehaviour
 						r.height = loopLabelRect.height;
 
 
-						// Décaler le Rect en fonction de offset
+						// Shift the rect by loopOffset
 						r.x += loopOffset;
 
 						while(r.xMax > lastRect.xMin)
@@ -1127,12 +1129,14 @@ public class GuiItemsCollection : MonoBehaviour
 							}
 
 
-							// Déplacer la copie de sa longueur
+							// Move the copy by its width
 							r.x -= loopLabelRect.width;
 						}
 
+						#endregion
 
-						// Ajouter des éléments à droite
+						#region Add copies to the right
+
 						r = new Rect(lastRect);
 
 						r.x = loopLabelRect.width;
@@ -1141,7 +1145,7 @@ public class GuiItemsCollection : MonoBehaviour
 						r.height = loopLabelRect.height;
 
 
-						// Décaler le Rect en fonction de offset
+						// Shift the rect by loopOffset
 						r.x += loopOffset;
 
 						while(r.xMin < lastRect.xMax)
@@ -1171,9 +1175,11 @@ public class GuiItemsCollection : MonoBehaviour
 							}
 
 
-							// Déplacer la copie de sa longueur
+							// Move the copy by its width
 							r.x += loopLabelRect.width;
 						}
+
+						#endregion
 
 
 						GUI.EndGroup();
@@ -1182,18 +1188,18 @@ public class GuiItemsCollection : MonoBehaviour
 			}
 
 
-			// Redéfinir la couleur du GUI comme c'était avant
+			// Undo any GUI.color changes
 			GUI.color = colorSave;
 
 
-			// Réactiver le GUI pour les éléments suivants s'il était désactivé
+			// Activate the GUI again if it was deactivated
 			if(!GUI.enabled)
 				GUI.enabled = true;
 		}
 
 
 		/// <summary>
-		/// Affiche un bouton normal dans le jeu.
+		/// Displays a normal button which sends event when unpressed.
 		/// </summary>
 		/// <returns>Button activation. true if clicked (push and release).</returns>
 		private bool DisplayButton()
@@ -1205,7 +1211,7 @@ public class GuiItemsCollection : MonoBehaviour
 					return GUILayout.Button(content, guiStyleElement.guiStyle);
 				else
 				{
-					Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+					Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 					return GUILayout.Button(content);
 				}
 			else if(thisGuiStyleMode == guiStyleMode.CUSTOM_STYLE)
@@ -1216,7 +1222,7 @@ public class GuiItemsCollection : MonoBehaviour
 
 
 		/// <summary>
-		/// Affiche un bouton répéteur dans le jeu.
+		/// Displays a button which sends continuous events while pressed.
 		/// </summary>
 		/// <returns>Button activation. true if pushed.</returns>
 		private bool DisplayRepeatButton()
@@ -1228,7 +1234,7 @@ public class GuiItemsCollection : MonoBehaviour
 					return GUILayout.RepeatButton(content, guiStyleElement.guiStyle);
 				else
 				{
-					Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItems);
+					Debug.LogWarning(ErrMess.noGuiStyleElementDefined, guiItemsCollection);
 					return GUILayout.RepeatButton(content);
 				}
 			else if(thisGuiStyleMode == guiStyleMode.CUSTOM_STYLE)
@@ -1426,8 +1432,8 @@ public class GuiItemsCollection : MonoBehaviour
 	public class ErrMess
 	{
 		/// <summary>
-		/// Message : Un GuiStyleElement n'a pas été défini pour un GuiItem dans cet objet alors qu'il en a besoin ; aucun style n'est donc appliqué. Pour ne plus voir ce message, veuillez définir Gui Style Element ou bien passer le mode de style à NO_STYLE (pour ce dernier, l'apparence ne changera pas par rapport à ce que vous voyez actuellement).
+		/// Message: A GuiStyleElement has not been defined for a GuiItem from this collection which needed it; no style will be applied on this GuiItem. Please set the guiStyleElement variable or use NO_STYLE mode instead of GUI_STYLE_ELEMENT.
 		/// </summary>
-		static public string noGuiStyleElementDefined = "Un GuiStyleElement n'a pas été défini pour un GuiItem dans cet objet alors qu'il en a besoin ; aucun style n'est donc appliqué. Pour ne plus voir ce message, veuillez définir Gui Style Element ou bien passer le mode de style à NO_STYLE (pour ce dernier, l'apparence ne changera pas par rapport à ce que vous voyez actuellement).";
+		static public string noGuiStyleElementDefined = "A GuiStyleElement has not been defined for a GuiItem from this collection which needed it; no style will be applied on this GuiItem. Please set the guiStyleElement variable or use NO_STYLE mode instead of GUI_STYLE_ELEMENT.";
 	}
 }

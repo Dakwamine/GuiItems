@@ -6,13 +6,13 @@ using System.Collections.Generic;
 public class GuiItemsDrawer : MonoBehaviour
 {
 	/// <summary>
-	/// Le GUISkin appliqué par défaut aux éléments de ce GuiItemsDrawer.
+	/// The default GUISkin applied on the GuiItem elements to draw.
 	/// </summary>
 	public GUISkin thisGuiSkin;
 
 
 	/// <summary>
-	/// Résolution idéale de l'interface.
+	/// Ideal resolution of the interface.
 	/// </summary>
 	static public Vector2 DesignResolution
 	{
@@ -26,16 +26,15 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Cette valeur sert, entre autres, à positionner un élément d'interface indépendant
-	/// à partir d'une position obtenue via Camera.main.WorldToScreenPoint() par exemple.
+	/// This value is used when you want to horizontally position a single interface item
+	/// using a position obtained from Camera.main.WorldToScreenPoint().
 	/// 
-	/// Par exemple, j'ai la position — sur laquelle je veux positionner un Label en GUI — d'un objet ;
-	/// position étant obtenue grâce à Camera.main.WorldToScreenPoint().
-	/// Ensuite, je divise x et y du Vector3 obtenu afin d'avoir un vecteur aux valeurs relatives (0 -> 1).
-	/// Enfin, je multiplie x par ScreenBaseWidth et y par ScreenBaseHeight => cela me donne la position
-	/// corrigée et utilisable dans le cadre d'un affichage rectifié avec GuiItemsDrawer.
+	/// For example, we obtain a position on screen with Camera.main.WorldToScreenPoint().
+	/// Then we divide x and y of the position to get values relative to the screen size, in [0.0-1.0] range.
+	/// Then we multiply x by GuiAreaWidth and y by GuiAreaHeight.
+	/// Then we have the correct position usable within a GuiItemsDrawer screen drawing.
 	/// 
-	/// Il est également possible d'utiliser RelativeToPixels() pour convertir directement un Vector2.
+	/// It is recommended to use RelativeToPixels() instead.
 	/// </summary>
 	public static int GuiAreaWidth
 	{
@@ -47,15 +46,15 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Cette valeur sert, entre autres, à positionner un élément d'interface indépendant
-	/// à partir d'une position obtenue via Camera.main.WorldToScreenPoint() par exemple.
+	/// This value is used when you want to horizontally position a single interface item
+	/// using a position obtained from Camera.main.WorldToScreenPoint() or by other means.
 	/// 
-	/// Par exemple, j'ai la position d'un objet obtenue grâce à Camera.main.WorldToScreenPoint().
-	/// Ensuite, je divise x et y du Vector3 obtenu afin d'avoir un vecteur aux valeurs relatives (0 -> 1).
-	/// Enfin, je multiplie x par ScreenBaseWidth et y par ScreenBaseHeight => cela me donne la position
-	/// corrigée et utilisable dans le cadre d'un affichage rectifié avec GuiItemsDrawer.
+	/// For example, we obtain a position on screen with Camera.main.WorldToScreenPoint().
+	/// Then we divide x and y of the position to get values relative to the screen size, in [0.0-1.0] range.
+	/// Then we multiply x by GuiAreaWidth and y by GuiAreaHeight.
+	/// Then we have the correct position usable within a GuiItemsDrawer screen drawing.
 	/// 
-	/// Il est également possible d'utiliser RelativeToPixels() pour convertir directement un Vector2.
+	/// It is recommended to use RelativeToPixels() instead.
 	/// </summary>
 	public static int GuiAreaHeight
 	{
@@ -67,7 +66,7 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Indique si la souris est sur n'importe quel morceau d'interface.
+	/// Indicates if the mouse is over any GuiItem from the associated GuiItemsCollection.
 	/// </summary>
 	public bool MouseOverGuiItems
 	{
@@ -79,7 +78,7 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Indique si la souris est sur une partie interactive de l'interface.
+	/// Indicates if the mouse is over any interactive GuiItem from the associated GuiItemsCollection.
 	/// </summary>
 	public bool MouseOverInteractiveGuiItem
 	{
@@ -94,13 +93,13 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Liste des GuiItems qui doivent s'afficher.
+	/// GuiItemsCollections to draw.
 	/// </summary>
 	public List<GuiItemsCollection> guiItemsOrder;
 
 
 	/// <summary>
-	/// Instance unique de cet objet.
+	/// Unique instance.
 	/// </summary>
 	static public GuiItemsDrawer instance;
 
@@ -110,7 +109,7 @@ public class GuiItemsDrawer : MonoBehaviour
 		mouseOverInteractiveGuiItem = false;
 
 
-		// Initialiser la liste
+		// Initialize the list
 		guiItemsOrder = new List<GuiItemsCollection>();
 
 		DontDestroyOnLoad(gameObject);
@@ -123,22 +122,22 @@ public class GuiItemsDrawer : MonoBehaviour
 
 	void OnGUI()
 	{
-		// Nettoyer la liste
+		// Clean the list
 		guiItemsOrder.RemoveAll(item => item == null);
 
 
-		// Sauvegarder la matrice du GUI
+		// Save the original GUI matrix
 		Matrix4x4 matrixBackup = GUI.matrix;
 
 
-		// Utiliser le skin s'il est défini dans thisGuiSkin
+		// If defined, use thisGuiSkin
 		GUISkin defaultSkin = null;
 		if(thisGuiSkin)
 		{
 			defaultSkin = GUI.skin;
 			GUI.skin = thisGuiSkin;
 		}
-		
+
 		foreach(GuiItemsCollection g in guiItemsOrder)
 		{
 			if(g.enabled)
@@ -148,27 +147,27 @@ public class GuiItemsDrawer : MonoBehaviour
 		}
 
 
-		// Remettre la matrice comme elle était avant
+		// Restore matrix from backup
 		GUI.matrix = matrixBackup;
 
 
-		// Chercher si la souris est sur un élément d'interface
+		// Look if mouse cursor is over GuiItemsCollection and a GuiItem
 		mouseOverGuiItems = false;
 		mouseOverInteractiveGuiItem = false;
 
 
-		// S'il n'y a aucun élément, alors la souris ne peut pas être sur un élément d'interface
+		// No need to continue if guiItemsOrder list is empty
 		if(guiItemsOrder.Count != 0)
 		{
 			foreach(GuiItemsCollection g in guiItemsOrder)
 			{
-				// Si l'objet est désactivé, ne pas le prendre en compte
+				// No need to check is this GuiItemsCollection has draw = false
 				if(!g.draw)
 					continue;
 
 				foreach(GuiItemsCollection.GuiItem item in g.items)
 				{
-					// Si l'élément est désactivé, ne pas le prendre en compte
+					// If the GuiItem is disabled, do not check it
 					if(!item.enabled)
 						continue;
 
@@ -187,19 +186,19 @@ public class GuiItemsDrawer : MonoBehaviour
 					break;
 				}
 			}
-			
-			
-			// Chercher si la souris est sur un objet interactif
+
+
+			// Look if the mouse cursor is over an interactive GuiItem
 			foreach(GuiItemsCollection g in guiItemsOrder)
 			{
-				// Si l'objet est désactivé, ne pas le prendre en compte
+				// No need to check is this GuiItemsCollection has draw = false
 				if(!g.draw)
 					continue;
-				
-				
+
+
 				foreach(GuiItemsCollection.GuiItem item in g.items)
 				{
-					// Si l'élément est désactivé, ne pas le prendre en compte
+					// If the GuiItem is disabled, do not check it
 					if(!item.enabled)
 						continue;
 
@@ -230,7 +229,7 @@ public class GuiItemsDrawer : MonoBehaviour
 		}
 
 
-		// Remettre le skin par défaut si thisGuiSkin a été défini
+		// Reset the default GUI skin if thisGuiSkin has been defined
 		if(defaultSkin)
 		{
 			GUI.skin = defaultSkin;
@@ -239,7 +238,7 @@ public class GuiItemsDrawer : MonoBehaviour
 
 	void Update()
 	{
-		// Nettoyer la liste
+		// Clean the list
 		guiItemsOrder.RemoveAll(item => item == null);
 
 
@@ -251,11 +250,11 @@ public class GuiItemsDrawer : MonoBehaviour
 				{
 					if(gi.loop)
 					{
-						// Anime les labels qui bouclent
+						// Animate looping labels
 						gi.loopOffset += gi.loopScrollSpeed * Time.deltaTime;
 
 
-						// Limiter loopOffset pour limiter le nombre de copies
+						// Limit loopOffset to limit copies count
 						if(gi.loopOffset < -gi.LoopLabelRect.width)
 							gi.loopOffset += gi.LoopLabelRect.width;
 						if(gi.loopOffset > gi.LoopLabelRect.width)
@@ -276,7 +275,7 @@ public class GuiItemsDrawer : MonoBehaviour
 
 		if(!instance.guiItemsOrder.Contains(collection))
 		{
-			// Référencer ce GuiItems dans la liste, du plus grand depth au plus petit
+			// Reference this GuiItemsCollection in the list, from greater depth to lesser
 			if(instance.guiItemsOrder.Count == 0)
 			{
 				instance.guiItemsOrder.Add(collection);
@@ -302,14 +301,14 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Valeurs permettant de mettre à l'échelle les éléments (positions et tailles)
-	/// de l'espace de la résolution design vers l'espace de la résolution actuelle.
+	/// Values used for GuiItem scaling (position and size) from design resolution
+	/// to current resolution.
 	/// </summary>
 	static public Vector2 FittingRatio
 	{
 		get
 		{
-			// Ratio permet de savoir si l'écran est "horizontally-driven" ou "vertically-driven"
+			// Ratio lets us know if the screen is "horizontally-driven" or "vertically-driven"
 			Vector2 ratio = new Vector2((float)Screen.width / DesignResolution.x, (float)Screen.height / DesignResolution.y);
 			Vector2 correction = Vector2.one;
 
@@ -330,11 +329,11 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Convertit un Rect avec des valeurs relatives en valeurs absolues (pixels)
-	/// exploitables dans le mode d'affichage de GuiItemsDrawer.
+	/// Converts a Rect with relative values to absolute values (in pixels) which can
+	/// be used in GuiItemsDrawer display mode.
 	/// </summary>
-	/// <param name="_relativeRect">Rect relatif</param>
-	/// <returns>Rect absolu</returns>
+	/// <param name="_relativeRect">Relative rect in percentage (values between 0 and 1, usually).</param>
+	/// <returns>Absolute rect in pixels.</returns>
 	static public Rect RelativeToPixels(Rect _relativeRect)
 	{
 		_relativeRect.width *= GuiItemsDrawer.GuiAreaWidth;
@@ -347,11 +346,11 @@ public class GuiItemsDrawer : MonoBehaviour
 
 
 	/// <summary>
-	/// Convertit un Vector2 avec des valeurs relatives en valeurs absolues (pixels)
-	/// exploitables dans le mode d'affichage de GuiItemsDrawer.
+	/// Converts a Vector2 with relative values to absolute values (in pixels) which can
+	/// be used in GuiItemsDrawer display mode.
 	/// </summary>
-	/// <param name="relativeValue">Vector2 relatif (valeurs entre 0 et 1, généralement)</param>
-	/// <returns>Vector2 absolu prêt pour utilisation dans le mode d'affichage de GuiItemsDrawer.</returns>
+	/// <param name="relativeValue">Relative Vector2 (values between 0 and 1, usually).</param>
+	/// <returns>Absolute Vector2 in pixels.</returns>
 	static public Vector2 RelativeToPixels(Vector2 _relativeVector2)
 	{
 		_relativeVector2.x *= GuiItemsDrawer.GuiAreaWidth;

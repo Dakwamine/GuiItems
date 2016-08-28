@@ -4,11 +4,11 @@ using System.Collections;
 
 
 /// <summary>
-/// Simply editor window that lets you quick check a path of
+/// Simple editor window that lets you quick check a path of
 /// a texture in your project instead of waiting your code to 
 /// compile.
 ///
-/// if the path exists then it shows a message
+/// If the path exists then it shows a message
 /// else displays an error message
 /// </summary>
 public class EditorGUIUtilityFindTexture : EditorWindow
