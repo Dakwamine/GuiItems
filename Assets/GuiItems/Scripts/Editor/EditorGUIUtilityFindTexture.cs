@@ -2,39 +2,41 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-
-/// <summary>
-/// Simple editor window that lets you quick check a path of
-/// a texture in your project instead of waiting your code to 
-/// compile.
-///
-/// If the path exists then it shows a message
-/// else displays an error message
-/// </summary>
-public class EditorGUIUtilityFindTexture : EditorWindow
+namespace NS_GuiItems
 {
-	string path = "";
-
-	[MenuItem("Assets/Check Path For Texture")]
-	static void Init()
+	/// <summary>
+	/// Simple editor window that lets you quick check a path of
+	/// a texture in your project instead of waiting your code to 
+	/// compile.
+	///
+	/// If the path exists then it shows a message
+	/// else displays an error message
+	/// </summary>
+	public class EditorGUIUtilityFindTexture : EditorWindow
 	{
-		EditorWindow window = EditorWindow.GetWindow(typeof(EditorGUIUtilityFindTexture));
-		window.position = new Rect(0f, 0f, 180f, 55f);
-		window.Show();
-	}
+		string path = "";
 
-	void OnGUI()
-	{
-		path = EditorGUILayout.TextField("Path To Test:", path);
-		if(GUILayout.Button("Check"))
+		[MenuItem("Assets/Check Path For Texture")]
+		static void Init()
 		{
-			if(EditorGUIUtility.FindTexture(path))
+			EditorWindow window = EditorWindow.GetWindow(typeof(EditorGUIUtilityFindTexture));
+			window.position = new Rect(0f, 0f, 180f, 55f);
+			window.Show();
+		}
+
+		void OnGUI()
+		{
+			path = EditorGUILayout.TextField("Path To Test:", path);
+			if(GUILayout.Button("Check"))
 			{
-				Debug.Log("Yay!, texture found at: " + path);
-			}
-			else
-			{
-				Debug.LogError("No texture found at: " + path + " Check your path");
+				if(EditorGUIUtility.FindTexture(path))
+				{
+					Debug.Log("Yay!, texture found at: " + path);
+				}
+				else
+				{
+					Debug.LogError("No texture found at: " + path + " Check your path");
+				}
 			}
 		}
 	}

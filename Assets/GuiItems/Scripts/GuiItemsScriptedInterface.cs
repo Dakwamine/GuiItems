@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-abstract public class GuiItemsScriptedInterface : MonoBehaviour
+namespace NS_GuiItems
 {
-	abstract public void Draw();
+	abstract public class GuiItemsScriptedInterface : MonoBehaviour
+	{
+		abstract public void Draw();
+	}
 }

@@ -1,26 +1,29 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("GuiItems/GuiStyleElement")]
-public class GuiStyleElement : MonoBehaviour
+namespace NS_GuiItems
 {
-	/// <summary>
-	/// The GUIStyle of this GuiStyleElement.
-	/// </summary>
-	public GUIStyle guiStyle
+	[AddComponentMenu("GuiItems/GuiStyleElement")]
+	public class GuiStyleElement : MonoBehaviour
 	{
-		get
+		/// <summary>
+		/// The GUIStyle of this GuiStyleElement.
+		/// </summary>
+		public GUIStyle guiStyle
 		{
-			return guiStyleExtension.guiStyle;
+			get
+			{
+				return guiStyleExtension.guiStyle;
+			}
+			set
+			{
+				guiStyleExtension.guiStyle = value;
+			}
 		}
-		set
-		{
-			guiStyleExtension.guiStyle = value;
-		}
-	}
 
-	/// <summary>
-	/// GUIStyleExtension object containing a GUIStyle object and additional editor parameters.
-	/// </summary>
-	public GuiItems.GUIStyleExtension guiStyleExtension;
+		/// <summary>
+		/// GUIStyleExtension object containing a GUIStyle object and additional editor parameters.
+		/// </summary>
+		public GUIStyleExtension guiStyleExtension;
+	}
 }

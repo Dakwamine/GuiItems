@@ -1,17 +1,24 @@
 using UnityEngine;
 using System.Collections;
 
-public class GuiItemsEditorStyles : MonoBehaviour
+namespace NS_GuiItems
 {
-	// Use this for initialization
-	void Start()
+	/// <summary>
+	/// Is it still used?
+	/// </summary>
+	public class GuiItemsEditorStyles : MonoBehaviour
 	{
+		// Use this for initialization
+		void Start()
+		{
 
+		}
+
+		// Update is called once per frame
+		void Update()
+		{
+
+		}
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-abstract public class GuiItems
+namespace NS_GuiItems
 {
 	/// <summary>
 	/// GUIStyle with a custom inspector.
