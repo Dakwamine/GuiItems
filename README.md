@@ -12,6 +12,7 @@ Alternatively, you can just grab the unity package from the Package folder and i
 
 # To do
 * Make a "how to" which explains things, with screenshots.
+* Move scripts to a specific namespace?
 
 # Version of Unity used
 * Unity 4.7.1f1
