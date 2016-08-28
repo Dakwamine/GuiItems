@@ -8,12 +8,12 @@ There is a working rudimentary editor but it is not yet documented.
 
 # Usage
 Clone / download the entire repository to launch the example project which will give you a first idea of how it works.
-Alternatively, you can just grab the unity package in Package and import it in one of your projects.
+Alternatively, you can just grab the unity package from the Package folder and import it in one of your projects. The package does not contain the example project.
 
 # To do
-* Code cleanup.
-* Make a how to which explains things, with screenshots.
-* Translate the comments and info in english? It's in french right now.
+* Make a "how to" which explains things, with screenshots.
+* Move scripts to a specific namespace?
+* Switch some classes to interfaces.
 
 # Version of Unity used
 * Unity 4.7.1f1
